@@ -1,0 +1,53 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+
+<div class="container">
+
+    <div class="row mt-4" *ngIf="!loading">
+        <div class="col-lg-4 offset-lg-4">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 45rem;">
+                <div class="card-header text-center"> {{operacion}}producto</div>
+                <div class="card-body">
+                    <form [formGroup]="formProduct" (ngSubmit)="addProduct()">
+                        <label for="staticEmail" class="col-form-label">Nombre(*)</label>
+                        <input type="text" formControlName="name" class="form-control" placeholder="Ingrese nombre">
+                        <span *ngIf="formProduct.get('name')?.hasError('required') && formProduct.get('name')?.touched">
+                            El campo nombre es <strong>requerido</strong>
+                        </span>
+                        <br/>
+                        <label for="staticEmail" class="col-form-label">Descripción(*)</label>
+                        <input type="text" formControlName="description" class="form-control mt-1" placeholder="Ingrese descripcion">
+                        <span *ngIf="formProduct.get('description')?.hasError('required') && formProduct.get('description')?.touched">
+                            El campo descripción es <strong>requerido</strong>
+                        </span>
+                        <br/>
+                        <label for="staticEmail" class="col-form-label">Precio(*)</label>
+                        <input type="number" formControlName="price" class="form-control mt-1" placeholder="Ingrese precio">
+                        <span *ngIf="formProduct.get('price')?.hasError('required') && formProduct.get('price')?.touched">
+                            El campo precio es <strong>requerido</strong>
+                        </span>
+                        <br/>
+                        <label for="staticEmail" class="col-form-label">Stock(*)</label>
+                        <input type="number" formControlName="stock" class="form-control mt-1" placeholder="Ingrese stock">
+                        <span *ngIf="formProduct.get('stock')?.hasError('required') && formProduct.get('stock')?.touched">
+                            El campo stock es <strong>requerido</strong>
+                        </span>
+                        <div class="row mt-3 text-center">
+                            <div class="col-lg-6">
+                                <button [disabled]="formProduct.invalid" type="submit" class="btn btn-success">Aceptar</button>
+                        
+                            </div>
+                            <div class="col-lg-6">
+                                <button routerLink="/" type="button" class="btn btn-outline-danger">Volver</button>
+                            </div>
+    
+                        </div>
+                        
+                    </form>
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+</div>

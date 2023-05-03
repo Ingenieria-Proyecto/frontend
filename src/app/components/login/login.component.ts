@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit{
   }
 
   login(){
+    console.log(this.username)
     if(this.username === '' || this.password === ''){
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return
@@ -37,13 +38,12 @@ export class LoginComponent implements OnInit{
     }
 
     this.loading = true
-    this
     this._serviceUser.login(user).subscribe({
       next: (token) => {
         console.log(token)
         localStorage.setItem('token', token)
         localStorage.setItem('user', this.username)
-        this.router.navigate(['/'])
+        this.router.navigate(['/confirm'])
       },
       error: (e: HttpErrorResponse) => {
         this._serviceError.msjError(e)

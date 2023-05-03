@@ -1,4 +1,5 @@
 <div class="grapper">
+    <!--
     <div class="body" *ngIf="!loading">
         <img class="logo" src="../../../assets/img/login.png" alt="img login">
         <h1>Registrar Usario</h1>
@@ -22,5 +23,64 @@
         </div>
         <a routerLink="/login">Volver</a>
     </div>
+    -->
+
+    <section *ngIf="!loading" class="vh-100" style="background-color: #b8f184;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                <img id="fondo" src="../../../assets/img/perezoso-1.png" alt="login form"
+                                    class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+
+                                    <div class="text-center">
+                                        <img class="logo" src="../../../assets/img/slogan2.png">
+                                      </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Creando cuenta</h5>
+
+                                    <div class="form-floating mb-4">
+                                        <input type="email" [(ngModel)]="username" class="form-control mt-3"
+                                            id="floatingInput" placeholder="ingrese usuario">
+                                        <label for="floatingInput">Correo</label>
+                                    </div>
+
+                                    <div class="form-floating mb-4">
+                                        <input type="password" [(ngModel)]="password" class="form-control"
+                                            id="floatingPassword" placeholder="Ingrese contraseña">
+                                        <label for="floatingPassword">Contraseña</label>
+                                    </div>
+
+                                    <div class="form-floating mb-4">
+                                        <input type="password" [(ngModel)]="confirmPassword" class="form-control"
+                                            id="floatingPassword" placeholder="Ingrese contraseña">
+                                        <label for="floatingPassword">Repetir contraseña</label>
+                                    </div>
+
+                                    <div class="d-grid gap-2 mt-3">
+                                        <button type="button" (click)="addUser()"
+                                            class="btn btn-secondary btn-lg mt-lg-2">Registrar</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a routerLink="/login" style="color: #f64343;">Volver</a>
+                                    </div>
+                                    
+                                    <br/>
+                                    <a href="#!" class="small text-muted">Terminos de uso.</a><br />
+                                    <a href="#!" class="small text-muted">Politicas de privacidad.</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <app-spinner *ngIf="loading"></app-spinner>
 </div>

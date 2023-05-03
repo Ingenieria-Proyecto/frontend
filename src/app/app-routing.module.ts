@@ -7,12 +7,14 @@ import { AddEditProductComponent } from './components/add-edit-product/add-edit-
 import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { AuthGuard } from './utils/auth.guard';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 
 const routes: Routes = [
   {path: '', component: ListProductsComponent,canActivate: [AuthGuard] },
   {path: 'add', component: AddEditProductComponent},
   {path: 'edit/:id', component: AddEditProductComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'confirm', component: ConfirmCodeComponent},
   {path: 'signIn', component: SignInComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];

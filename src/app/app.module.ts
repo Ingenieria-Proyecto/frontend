@@ -20,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component'
 import { AddTokenInterceptor } from './utils/add-token.interceptor';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AddTokenInterceptor } from './utils/add-token.interceptor';
     ProgressBarComponent,
     LoginComponent,
     SignInComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ConfirmCodeComponent
   ],
   imports: [
     BrowserModule,

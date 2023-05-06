@@ -66,17 +66,19 @@ export class LoginComponent implements OnInit{
       password: this.password
     }
 
+    
     this.loading = true
     this._serviceLogin.login(login).subscribe({
-      next: (token) => {
-        console.log(token)
-        localStorage.setItem('token', token)
+      next: (data) => {
+        console.log(data)
+        //localStorage.setItem('token', token)
         localStorage.setItem('user', this.username)
         this.router.navigate(['/confirm'])
       },
       error: (e: HttpErrorResponse) => {
-        this._serviceError.msjError(e)
         this.loading = false
+        this._serviceError.msjError(e)
+        console.log(e)
       }
     })
 

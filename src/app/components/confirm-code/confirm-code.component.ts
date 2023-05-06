@@ -62,7 +62,7 @@ export class ConfirmCodeComponent implements OnInit{
             this.toastr.error(data.message)
           }else{
             this.toastr.info(`Bienvenido ${this.email}`,'Sesión correcta')
-            this.router.navigate(['/'])
+            this.router.navigate(['/home'])
           }
           this.loading = false
         },

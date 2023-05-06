@@ -10,11 +10,11 @@ import { AuthGuard } from './utils/auth.guard';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 
 const routes: Routes = [
-  {path: '', component: ListProductsComponent,canActivate: [AuthGuard] },
+  {path: '', component: LoginComponent,canActivate: [AuthGuard]},
   {path: 'add', component: AddEditProductComponent},
   {path: 'edit/:id', component: AddEditProductComponent},
-  {path: 'login', component: LoginComponent},
   {path: 'confirm', component: ConfirmCodeComponent},
+  {path: 'home', component: ListProductsComponent},
   {path: 'signIn', component: SignInComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];

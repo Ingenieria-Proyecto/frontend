@@ -14,11 +14,11 @@ export class LoginService {
 
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.endpoint
-    this.userUrl = 'api/login/'
+    this.userUrl = 'api/login'
    }
 
   createUser(login: Login): Observable<any>{
-    return this.http.post(`${this.myAppUrl}${this.userUrl}`, login)
+    return this.http.post(`${this.myAppUrl}${this.userUrl}/`, login)
   }
 
   login(login: Login): Observable<string>{

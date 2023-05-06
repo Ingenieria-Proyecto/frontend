@@ -61,30 +61,45 @@ export class SignInComponent implements OnInit {
   }*/
 
   addUser() {
+    const email_expresion = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    const password_expresion = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
+
     if (this.username === '' || this.password === '' || this.confirmPassword === '') {
       this.toastr.error('Todos los campos son obligatorios', 'error')
       console.log(this.username)
       return
     }
 
+    if(!email_expresion.test(this.username)){
+      this.toastr.error('Correo electronico invalido','error')
+      return
+    }
+    
     if (this.password != this.confirmPassword) {
       this.toastr.error('Las contraseñas ingresadas son dintintas', 'error')
       return
     }
+    if(!password_expresion.test(this.password)){
+      this.toastr.error('La contraseña no cumplen con los requisitos', 'error')
+      return
+    }
+
 
     const login: Login = {
       email: this.username,
       password: this.password
     }
     this.loading = true
-
+   
     this._serviceLogin.createUser(login).subscribe({
       next: (v) => {
+        console.log("dato v: ",v)
         this.loading = false
         this.toastr.success(`El usuario ${this.username} fue registrado con éxito`, 'success')
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       },
       error: (e: HttpErrorResponse) => {
+        this.router.navigate(['/signIn'])
         this.loading = false
         this._serviceError.msjError(e)
       }

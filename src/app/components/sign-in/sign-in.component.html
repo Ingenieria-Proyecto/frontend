@@ -45,7 +45,7 @@
                                     <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Creando cuenta</h5>
 
                                     <div class="form-floating mb-4">
-                                        <input type="email" [(ngModel)]="username" class="form-control mt-3"
+                                        <input type="email" [(ngModel)]="username" class="form-control mt-3" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                             id="floatingInput" placeholder="ingrese usuario">
                                         <label for="floatingInput">Correo</label>
                                     </div>
@@ -67,7 +67,7 @@
                                             class="btn btn-secondary btn-lg mt-lg-2">Registrar</button>
                                     </div>
                                     <div class="text-center">
-                                        <a routerLink="/login" style="color: #f64343;">Volver</a>
+                                        <a routerLink="/" style="color: #f64343;">Volver</a>
                                     </div>
                                     
                                     <br/>

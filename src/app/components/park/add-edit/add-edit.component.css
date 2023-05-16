@@ -1,0 +1,5 @@
+.custom-return-btn {
+  background-color: #304130c0; /* Reemplaza este valor con tu tono de verde personalizado */
+  border-color: #304130c0; /* Opcional: si deseas que el borde tenga el mismo color */
+  color: white; /* Opcional: si deseas que el texto sea blanco para contrastar con el fondo */
+}

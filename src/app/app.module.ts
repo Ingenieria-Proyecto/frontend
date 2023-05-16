@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -21,6 +20,9 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component'
 import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ListParksComponent } from './components/park/list-parks/list-parks.component';
+import { AddEditComponent } from './components/park/add-edit/add-edit.component';
+import { FilterPipe } from './utils/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,10 @@ import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.com
     LoginComponent,
     SignInComponent,
     SpinnerComponent,
-    ConfirmCodeComponent
+    ConfirmCodeComponent,
+    ListParksComponent,
+    AddEditComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

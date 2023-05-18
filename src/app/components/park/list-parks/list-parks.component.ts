@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import {Subject} from 'rxjs';
 
 import { ParkService } from 'src/app/services/park.service';
 import { Park } from 'src/app/interfaces/park';
@@ -11,8 +12,10 @@ import { Park } from 'src/app/interfaces/park';
 })
 export class ListParksComponent implements OnInit {
   listPark: Park[] = [];
-  filteredListPark: Park[] = []; // Nueva lista filtrada
   loading: boolean = false;
+  email: string = localStorage.getItem("user") || ""
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private _parkService: ParkService,
@@ -20,6 +23,15 @@ export class ListParksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      lengthChange: true,
+      language:{
+        searchPlaceholder: 'Por nombres de parques',
+        url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+      }
+    }
     this.getListParks();
   }
 
@@ -27,8 +39,8 @@ export class ListParksComponent implements OnInit {
     this.loading = true;
     this._parkService.getListParks().subscribe((data: Park[]) => {
       this.listPark = data;
-      this.filteredListPark = data; // Inicialmente, mostrar todos los parques
       this.loading = false;
+      this.dtTrigger.next(null);
     });
   }
 
@@ -39,17 +51,5 @@ export class ListParksComponent implements OnInit {
     this.toastr.warning('El parque fue eliminado con exito', 'Parque eliminado')
     })
   }
-
-  filterParks() {
-    // Filtrar la lista de parques basado en el filtro
-    if (this.filtro.trim() !== '') {
-      this.filteredListPark = this.listPark.filter(park =>
-        park.nombre_parque.toLowerCase().includes(this.filtro.trim().toLowerCase())
-      );
-    } else {
-      this.filteredListPark = this.listPark; // Si no hay filtro, mostrar todos los parques
-    }
-  }
-
-  filtro: string = '';
 }
+

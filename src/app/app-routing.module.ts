@@ -10,6 +10,9 @@ import { AuthGuard } from './utils/auth.guard';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 import { ListRatesComponent } from './components/list-rates/list-rates.component';
 import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.component';
+import { ListParksComponent } from './components/park/list-parks/list-parks.component';
+import { AddEditComponent } from './components/park/add-edit/add-edit.component';
+
 
 const routes: Routes = [
   {path: '', component: LoginComponent,canActivate: [AuthGuard]},
@@ -21,6 +24,9 @@ const routes: Routes = [
   {path: 'rates', component: ListRatesComponent},
   {path: 'addRate', component: AddEditRateComponent},
   {path: 'editRate/:id', component: AddEditRateComponent},
+  {path: 'listPark', component: ListParksComponent},
+  {path: 'editPark/:id', component: AddEditComponent},
+  {path: 'addPark', component: AddEditComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

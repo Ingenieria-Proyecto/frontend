@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -26,6 +25,9 @@ import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.com
 import { ListRatesComponent } from './components/list-rates/list-rates.component';
 import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.component';
 
+import { ListParksComponent } from './components/park/list-parks/list-parks.component';
+import { AddEditComponent } from './components/park/add-edit/add-edit.component';
+import { FilterPipe } from './utils/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,9 @@ import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.c
     ListRatesComponent,
     AddEditRateComponent,
     
+    ListParksComponent,
+    AddEditComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

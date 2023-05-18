@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<div class="container">
+
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="wrapper">
+        <div class="row no-gutters">
+          <div
+            class="col-lg-5 col-md-5 order-md-last d-flex align-items-stretch"
+          >
+            <div class="contact-wrap w-100 p-md-5 p-4">
+              <h3 class="mb-4">Agregar parque Nacional</h3>
+              <form [formGroup]="formProduct" (ngSubmit)="addProduct()">
+                <label for="staticEmail" class="col-form-label"
+                  >Nombre del parque</label
+                ><br>
+                <input
+                  type="text"
+                  formControlName="nombre_parque"
+                  class="form-control"
+                  placeholder="Ingrese nombre del parque"
+                />
+                <span
+                  *ngIf="
+                    formProduct.get('nombre_parque')?.hasError('required') &&
+                    formProduct.get('nombre_parque')?.touched
+                  "
+                >
+                  El campo nombre es <strong>requerido</strong>
+                </span>
+                <br />
+                <div class="row mt-3 text-center">
+                  <div class="col-lg-6">
+                    <button
+                      [disabled]="formProduct.invalid"
+                      type="submit"
+                      class="btn btn-success"
+                    >
+                    <i class="bi bi-check-square-fill"></i>
+                      Aceptar
+                    </button>
+                  </div>
+                  <div class="col-lg-6">
+                    <button
+                      routerLink="/listPark"
+                      type="button"
+                      class="btn custom-return-btn"
+                    >
+                    <i class="bi bi-arrow-return-left"></i>
+                    Volver
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-5 d-flex align-items-stretch">
+            <div class="info-wrap w-100 p-md-4 p-2">
+              <img src="https://www.travelandleisure.com/thmb/alGRUejkJtx_5GWmV9aQ6w9h2Uw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/costa-rica-arenal-volcano-COSTARICATG0621-171c9a2c18b448339d591ec2a4b41f6d.jpg" alt="Descripción de la imagen" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

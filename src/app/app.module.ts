@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
+import {DataTablesModule} from 'angular-datatables';
 
 //Componentes
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -21,6 +23,9 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component'
 import { AddTokenInterceptor } from './utils/add-token.interceptor';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ListRatesComponent } from './components/list-rates/list-rates.component';
+import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.component';
+
 
 @NgModule({
   declarations: [
@@ -32,15 +37,20 @@ import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.com
     LoginComponent,
     SignInComponent,
     SpinnerComponent,
-    ConfirmCodeComponent
+    ConfirmCodeComponent,
+    ListRatesComponent,
+    AddEditRateComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    DataTablesModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgSelectModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',

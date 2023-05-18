@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit{
       next: (data) => {
         console.log(data)
         //localStorage.setItem('token', token)
+        
         localStorage.setItem('user', this.username)
         this.router.navigate(['/confirm'])
       },

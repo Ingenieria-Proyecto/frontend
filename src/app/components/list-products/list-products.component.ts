@@ -12,6 +12,7 @@ export class ListProductsComponent implements OnInit {
 
   listProducts: Product[] = []
   loading: boolean = false
+  email: string = localStorage.getItem("user") || ""
 
   constructor(private _productService: ProductService, private toastr: ToastrService){
 

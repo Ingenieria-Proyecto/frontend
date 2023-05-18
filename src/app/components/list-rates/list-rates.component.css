@@ -1,0 +1,4 @@
+.dataTables_filter label::before {
+    content: "Nuevo texto: ";
+  }
+  

@@ -61,8 +61,9 @@ export class ConfirmCodeComponent implements OnInit{
           if(data.success!=true){
             this.toastr.error(data.message)
           }else{
+            localStorage.setItem("token", data.token)
             this.toastr.info(`Bienvenido ${this.email}`,'Sesión correcta')
-            this.router.navigate(['/home'])
+            this.router.navigate(['/rates'])
           }
           this.loading = false
         },
@@ -73,7 +74,7 @@ export class ConfirmCodeComponent implements OnInit{
       })
 
     }else{
-      this.toastr.error('El código debe de ser de 6 dígitos')
+      this.toastr.error('El código no cumple con los requisitos')
     }
   }
 

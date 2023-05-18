@@ -1,0 +1,57 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<app-navbar></app-navbar>
+<div class="container">
+
+    <div class="row mt-4" *ngIf="!loading">
+        <div class="col-lg-4 offset-lg-4">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 45rem;">
+                <div class="card-header text-center"> {{operacion}}Tarifa</div>
+                <div class="card-body">
+                    <form [formGroup]="formRate" (ngSubmit)="addRate()">
+                        
+
+                        <label for="staticEmail" class="col-form-label">Parque Nacional(*)</label>
+                       <ng-select formControlName="fk_parque" class="form-select mt-1">
+                        <ng-option value="" disabled selected>Seleccione un parque</ng-option>
+                        <ng-option *ngFor="let parque of listParques" [value]="parque.id">{{parque.name}}</ng-option>
+                       </ng-select> 
+                          
+                        <span *ngIf="formRate.get('fk_parque')?.hasError('required') && formRate.get('fk_parque')?.touched">
+                            El campo parque es <strong>requerido</strong>
+                        </span>
+                        <br/>
+
+                        <label for="staticEmail" class="col-form-label">Precio Nacional(*)</label>
+                        <input type="number" formControlName="precio_nacional" class="form-control mt-1" placeholder="Ingrese descripcion">
+                        <span *ngIf="formRate.get('precio_nacional')?.hasError('required') && formRate.get('precio_nacional')?.touched">
+                            El campo Precio Nacional es <strong>requerido</strong>
+                        </span>
+                        <br/>
+
+                        <label for="staticEmail" class="col-form-label">Precio Extranjero(*)</label>
+                        <input type="number" formControlName="precio_extranjero" class="form-control mt-1" placeholder="Ingrese precio">
+                        <span *ngIf="formRate.get('precio_extranjero')?.hasError('required') && formRate.get('precio_extranjero')?.touched">
+                            El campo precio Extranjero es <strong>requerido</strong>
+                        </span>
+                        <br/>
+
+                        <div class="row mt-3 text-center">
+                            <div class="col-lg-6">
+                                <button [disabled]="formRate.invalid" type="submit" class="btn btn-success">Aceptar</button>
+                        
+                            </div>
+                            <div class="col-lg-6">
+                                <button routerLink="/rates" type="button" class="btn btn-outline-danger">Volver</button>
+                            </div>
+    
+                        </div>
+                        
+                    </form>
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+</div>

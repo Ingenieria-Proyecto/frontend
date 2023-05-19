@@ -28,6 +28,8 @@ import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.c
 import { ListParksComponent } from './components/park/list-parks/list-parks.component';
 import { AddEditComponent } from './components/park/add-edit/add-edit.component';
 import { FilterPipe } from './utils/filter.pipe';
+import { ListRolesComponent } from './components/list-roles/list-roles.component';
+import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { FilterPipe } from './utils/filter.pipe';
     
     ListParksComponent,
     AddEditComponent,
-    FilterPipe
+    FilterPipe,
+    ListRolesComponent,
+    AddEditRoleComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,39 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<app-navbar></app-navbar>
+<div class="container">
+
+    <div class="row mt-4" *ngIf="!loading">
+        <div class="col-lg-4 offset-lg-4">
+            <div class="card text-white bg-secondary mb-3" style="max-width: 45rem;">
+                <div class="card-header text-center"> {{operacion}}Tarifa</div>
+                <div class="card-body">
+                    <form [formGroup]="formRole" (ngSubmit)="addRole()">
+                        
+
+                        <label for="staticEmail" class="col-form-label"> Nombre rol(*)</label>
+                        <input type="text" formControlName="nombre_rol" class="form-control mt-1" placeholder="Ingrese nombre">
+                        <span *ngIf="formRole.get('nombre_rol')?.hasError('required') && formRole.get('nombre_rol')?.touched">
+                            El campo nombre role es <strong>requerido</strong>
+                        </span>
+                        <br/>
+
+                        <div class="row mt-3 text-center">
+                            <div class="col-lg-6">
+                                <button [disabled]="formRole.invalid" type="submit" class="btn btn-success">Aceptar</button>
+                        
+                            </div>
+                            <div class="col-lg-6">
+                                <button routerLink="/listRole" type="button" class="btn btn-outline-danger">Volver</button>
+                            </div>
+    
+                        </div>
+                        
+                    </form>
+    
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+</div>

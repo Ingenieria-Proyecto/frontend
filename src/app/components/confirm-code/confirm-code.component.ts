@@ -66,6 +66,8 @@ export class ConfirmCodeComponent implements OnInit{
               this.toastr.error(data.msg)
             }else{
               localStorage.setItem("token", data.token)
+              localStorage.setItem("type_user", data.type_user)
+              
               this.toastr.info(`Bienvenido ${this.email}`,'Sesión correcta')
               this.router.navigate(['/rates'])
             }

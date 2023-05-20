@@ -46,32 +46,52 @@ export class ConfirmCodeComponent implements OnInit{
   confirmCode(){
     console.log(this.confirm,length)
     if(this.confirm.length>5){
-      
-      //this._serviceLogin.validateAccess()
-      const validateAccess: validateCode = {
-        email: this.email,
-        code_auth: this.confirm
-      }
-      console.log(validateAccess)
 
-      this._serviceLogin.validateAccess(validateAccess).subscribe({
-        next: (data) => {
-          console.log(data)
-          this.loading = true
-          if(data.success!=true){
-            this.toastr.error(data.message)
-          }else{
-            localStorage.setItem("token", data.token)
-            this.toastr.info(`Bienvenido ${this.email}`,'Sesión correcta')
-            this.router.navigate(['/rates'])
-          }
-          this.loading = false
-        },
-        error: (e: HttpErrorResponse) => {
-          this._serviceError.msjError(e)
-          this.loading = false
+      const user = localStorage.getItem("user")
+      console.log("user 1 restring: ", user)
+
+      if(user!=null){
+
+        const validateAccess: validateCode = {
+          email: this.email,
+          code_auth: this.confirm
         }
-      })
+        console.log(validateAccess)
+  
+        this._serviceLogin.validateAccess(validateAccess).subscribe({
+          next: (data) => {
+            console.log(data)
+            this.loading = true
+            if(data.success!=true){
+              this.toastr.error(data.msg)
+            }else{
+              localStorage.setItem("token", data.token)
+              localStorage.setItem("type_user", data.type_user)
+              
+              this.toastr.info(`Bienvenido ${this.email}`,'Sesión correcta')
+              this.router.navigate(['/rates'])
+            }
+            this.loading = false
+          },
+  
+          error: (e: HttpErrorResponse) => {
+            
+            if(user === "" || user === undefined){
+              console.log("entre al fallar usuario")
+              this.router.navigate(['/confirm'])
+            }
+            console.log("entre al error de confirmacion")
+            this._serviceError.msjError(e)
+            this.loading = false
+          }
+        })
+
+      }else{
+        this.toastr.error("error en el código", "ERROR")
+      }
+
+      //this._serviceLogin.validateAccess()
+      
 
     }else{
       this.toastr.error('El código no cumple con los requisitos')

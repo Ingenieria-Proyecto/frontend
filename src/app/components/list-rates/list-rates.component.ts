@@ -19,7 +19,8 @@ export class ListRatesComponent implements OnInit{
   email: string = localStorage.getItem("user") || ""
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-
+  type_user: string = localStorage.getItem("type_user") || ""
+  
   constructor(private _ratesService: RatesService,private _serviceError: ErrorService ,private toastr: ToastrService) { 
     
   }

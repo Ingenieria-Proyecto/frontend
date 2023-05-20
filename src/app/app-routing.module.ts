@@ -12,7 +12,9 @@ import { ListRatesComponent } from './components/list-rates/list-rates.component
 import { AddEditRateComponent } from './components/add-edit-rate/add-edit-rate.component';
 import { ListParksComponent } from './components/park/list-parks/list-parks.component';
 import { AddEditComponent } from './components/park/add-edit/add-edit.component';
-
+import { ListRolesComponent } from './components/list-roles/list-roles.component';
+import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.component';
+import { UsersGuard } from './utils/users.guard';
 
 const routes: Routes = [
   {path: '', component: LoginComponent,canActivate: [AuthGuard]},
@@ -21,12 +23,15 @@ const routes: Routes = [
   {path: 'confirm', component: ConfirmCodeComponent},
   {path: 'home', component: ListProductsComponent},
   {path: 'signIn', component: SignInComponent},
-  {path: 'rates', component: ListRatesComponent},
+  {path: 'rates', component: ListRatesComponent, canActivate: [UsersGuard]},
   {path: 'addRate', component: AddEditRateComponent},
   {path: 'editRate/:id', component: AddEditRateComponent},
   {path: 'listPark', component: ListParksComponent},
   {path: 'editPark/:id', component: AddEditComponent},
   {path: 'addPark', component: AddEditComponent},
+  {path: 'listRole', component: ListRolesComponent},
+  {path: 'addRole', component: AddEditRoleComponent},
+  {path: 'editRole/:id', component: AddEditRoleComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

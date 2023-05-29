@@ -16,19 +16,38 @@
                 ><br>
                 <input
                   type="text"
-                  formControlName="nombre_parque"
+                  formControlName="nombre"
                   class="form-control"
                   placeholder="Ingrese nombre del parque"
                 />
                 <span
                   *ngIf="
-                    formProduct.get('nombre_parque')?.hasError('required') &&
-                    formProduct.get('nombre_parque')?.touched
+                    formProduct.get('nombre')?.hasError('required') &&
+                    formProduct.get('nombre')?.touched
                   "
                 >
                   El campo nombre es <strong>requerido</strong>
                 </span>
                 <br />
+
+                <label for="staticEmail" class="col-form-label"
+                >Número de visitas</label
+              ><br>
+              <input
+                type="number"
+                formControlName="visitas"
+                class="form-control"
+                placeholder="Ingrese la cantidad de visitas"
+              />
+              <span
+                *ngIf="
+                  formProduct.get('visitas')?.hasError('required') &&
+                  formProduct.get('visitas')?.touched
+                "
+              >
+                El campo nombre es <strong>requerido</strong>
+              </span>
+              <br />
                 <div class="row mt-3 text-center">
                   <div class="col-lg-6">
                     <button

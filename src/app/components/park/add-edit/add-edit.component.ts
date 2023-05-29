@@ -25,7 +25,8 @@ export class AddEditComponent implements OnInit {
     private aRouter: ActivatedRoute
   ) {
     this.formProduct = this.fb.group({
-      nombre_parque: ['', [Validators.required, Validators.maxLength(60)]],
+      nombre: ['', [Validators.required, Validators.maxLength(60)]],
+      visitas: ['', [Validators.required, Validators.max(20000), Validators.min(1)]]
     });
     this.id = Number(aRouter.snapshot.paramMap.get('id'));
   }
@@ -42,21 +43,23 @@ export class AddEditComponent implements OnInit {
     this._parkService.getPark(id).subscribe((data: Park) => {
       this.loading = false;
       this.formProduct.setValue({
-        nombre_parque: data.nombre_parque,
+        nombre: data.nombre,
+        visitas: data.visitas
       });
     });
   }
 
   addProduct = () => {
     const park: Park = {
-      nombre_parque: this.formProduct.value.nombre_parque,
+      nombre: this.formProduct.value.nombre,
+      visitas: this.formProduct.value.visitas
     };
     this.loading = true
     if (this.id !== 0) {
       // es editar
       park.id = this.id
       this._parkService.updatePark(park).subscribe(() => {
-        this.toastr.info(`El producto ${park.nombre_parque} fue actualizado con éxito`, 'Parque actualizado')
+        this.toastr.info(`El producto ${park.nombre} fue actualizado con éxito`, 'Parque actualizado')
         this.loading = false
         this.router.navigate(['/listPark'])
       })
@@ -64,7 +67,7 @@ export class AddEditComponent implements OnInit {
     } else {
 
       this._parkService.addPark(park).subscribe(() => {
-        this.toastr.success(`El parque ${park.nombre_parque} fue registrado con exito`, 'Parque registrado')
+        this.toastr.success(`El parque ${park.nombre} fue registrado con exito`, 'Parque registrado')
         this.loading = false
         this.router.navigate(['/listPark'])
       })

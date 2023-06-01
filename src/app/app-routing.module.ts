@@ -15,6 +15,7 @@ import { AddEditComponent } from './components/park/add-edit/add-edit.component'
 import { ListRolesComponent } from './components/list-roles/list-roles.component';
 import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.component';
 import { UsersGuard } from './utils/users.guard';
+import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent,canActivate: [AuthGuard]},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'listRole', component: ListRolesComponent},
   {path: 'addRole', component: AddEditRoleComponent},
   {path: 'editRole/:id', component: AddEditRoleComponent},
+  {path: 'indexTicket', component: ListParkComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

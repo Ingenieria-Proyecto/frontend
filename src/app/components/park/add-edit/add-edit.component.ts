@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { saveAs } from 'file-saver';
+
 
 import { ParkService } from 'src/app/services/park.service';
 import { Park } from 'src/app/interfaces/park';
@@ -16,6 +18,9 @@ export class AddEditComponent implements OnInit {
   loading: boolean = false;
   id: number;
   operacion: string = 'Agregar ';
+  selectedFile: File | null = null;
+  image: string | null = null;
+
 
   constructor(
     private fb: FormBuilder,
@@ -38,6 +43,25 @@ export class AddEditComponent implements OnInit {
     }
   }
 
+
+  handleClick() {
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (input) {
+      input.click();
+    }
+  }
+
+  guardarArchivo(event: any) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    this.selectedFile = file;
+    reader.onload = (e: any) => {
+      this.image = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+
   getPark(id: number) {
     this.loading = true;
     this._parkService.getPark(id).subscribe((data: Park) => {
@@ -56,7 +80,7 @@ export class AddEditComponent implements OnInit {
     };
     this.loading = true
     if (this.id !== 0) {
-      // es editar
+      console.log(park.visitas)
       park.id = this.id
       this._parkService.updatePark(park).subscribe(() => {
         this.toastr.info(`El producto ${park.nombre} fue actualizado con éxito`, 'Parque actualizado')
@@ -65,14 +89,12 @@ export class AddEditComponent implements OnInit {
       })
 
     } else {
-
       this._parkService.addPark(park).subscribe(() => {
         this.toastr.success(`El parque ${park.nombre} fue registrado con exito`, 'Parque registrado')
         this.loading = false
         this.router.navigate(['/listPark'])
       })
     }
+}
 
-
-  };
 }

@@ -11,6 +11,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {DataTablesModule} from 'angular-datatables';
+import { MatCardModule } from '@angular/material/card';
+
 
 //Componentes
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -30,6 +32,7 @@ import { AddEditComponent } from './components/park/add-edit/add-edit.component'
 import { FilterPipe } from './utils/filter.pipe';
 import { ListRolesComponent } from './components/list-roles/list-roles.component';
 import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.component';
+import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 
 @NgModule({
   declarations: [
@@ -44,14 +47,15 @@ import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.c
     ConfirmCodeComponent,
     ListRatesComponent,
     AddEditRateComponent,
-    
     ListParksComponent,
     AddEditComponent,
     FilterPipe,
     ListRolesComponent,
-    AddEditRoleComponent
+    AddEditRoleComponent,
+    ListParkComponent
   ],
   imports: [
+    MatCardModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

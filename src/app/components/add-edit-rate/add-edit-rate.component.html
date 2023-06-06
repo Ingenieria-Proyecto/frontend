@@ -13,7 +13,7 @@
                         <label for="staticEmail" class="col-form-label">Parque Nacional(*)</label>
                        <ng-select formControlName="fk_parque" class="form-select mt-1">
                         <ng-option value="" disabled selected>Seleccione un parque</ng-option>
-                        <ng-option *ngFor="let parque of listParques" [value]="parque.id">{{parque.name}}</ng-option>
+                        <ng-option *ngFor="let parque of listParques" [value]="parque.id">{{parque.nombre_parque}}</ng-option>
                        </ng-select> 
                           
                         <span *ngIf="formRate.get('fk_parque')?.hasError('required') && formRate.get('fk_parque')?.touched">
@@ -44,8 +44,7 @@
                                 <button routerLink="/rates" type="button" class="btn btn-outline-danger">Volver</button>
                             </div>
     
-                        </div>
-                        
+                        </div>                
                     </form>
     
                 </div>

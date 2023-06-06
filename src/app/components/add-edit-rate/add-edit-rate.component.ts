@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Park } from 'src/app/interfaces/park';
 import { Rate } from 'src/app/interfaces/rate';
 import { ErrorService } from 'src/app/services/error.service';
+import { ParkService } from 'src/app/services/park.service';
 import { RatesService } from 'src/app/services/rates.service';
 
 @Component({
@@ -18,34 +20,11 @@ export class AddEditRateComponent implements OnInit{
   loading: boolean = false
   operacion: string = 'Agregar '
   id: number
-  listParques: any[] = [{
-    id: 1,
-    name: 'Manuel Antonio'
-  },
-  {
-    id: 2,
-    name: 'Volcán Irazú'
-  },
-  {
-    id: 3,
-    name: 'Volcán Poás'
-  },
-  {
-    id: 4,
-    name: 'Volcán San José'
-  },
-  {
-    id: 5,
-    name: 'Volcán San Luis'
-  },
-  {
-    id: 6,
-    name: 'Volcán San Fernando'
-  }
-]
+  listParques: Park[] = []
+
   constructor(private fb: FormBuilder, private _rateService: RatesService,
     private router: Router, private toastr: ToastrService, private _errorService: ErrorService,
-    private aRouter: ActivatedRoute) {
+    private aRouter: ActivatedRoute, private _parkService: ParkService) {
 
     this.formRate = this.fb.group({
       fk_parque: ['', Validators.required],
@@ -61,6 +40,16 @@ export class AddEditRateComponent implements OnInit{
       this.operacion = 'Editar '
       this.getRate(this.id)
     }
+    this.getListParks()
+  }
+
+  getListParks() {
+    const park = [{id: '', nombre: '', visitas: ''}]
+    this.loading = true;
+    this._parkService.getListParks().subscribe((data: Park[]) => {
+      this.listParques = data;
+      this.loading = false;
+    });
   }
   
   getRate(id: number) {

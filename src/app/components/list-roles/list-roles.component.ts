@@ -21,7 +21,6 @@ export class ListRolesComponent implements OnInit{
 
   constructor(private _roleService: RoleService, private _serviceError: ErrorService,
     private toastr: ToastrService){
-
   }
   ngOnInit(): void {
     this.dtOptions = {

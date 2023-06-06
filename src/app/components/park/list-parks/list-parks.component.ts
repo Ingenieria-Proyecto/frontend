@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {Subject} from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { ParkService } from 'src/app/services/park.service';
 import { Park } from 'src/app/interfaces/park';
@@ -44,12 +45,24 @@ export class ListParksComponent implements OnInit {
     });
   }
 
-  deletePark(id: number){
-    this.loading = true
-    this._parkService.deleteProduct(id).subscribe(() => {
-    this.getListParks()
-    this.toastr.warning('El parque fue eliminado con exito', 'Parque eliminado')
-    })
+  deletePark(id: number) {
+    this.loading = true;
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el parque',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._parkService.deleteProduct(id).subscribe(() => {
+          this.getListParks();
+          this.toastr.warning('El parque fue eliminado con éxito', 'Parque eliminado');
+        });
+      }
+    });
   }
+
 }
 

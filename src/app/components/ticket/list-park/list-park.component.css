@@ -1,0 +1,58 @@
+.card-title-left {
+  text-align: left;
+}
+
+.mat-card-image:hover {
+  transform: scale(1.08);
+  transition: transform 0.8s;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Color y opacidad de la capa de oscuridad */
+}
+
+.custom-input {
+  border-radius: 0;
+  /* Otros estilos personalizados para el input */
+}
+
+.custom-input:focus {
+  /* Estilos personalizados para el input cuando está enfocado */
+}
+
+.input-group-text {
+  border-radius: 0;
+  /* Otros estilos personalizados para el span */
+}
+
+.input-group-text .bi-search {
+  /* Estilos personalizados para el ícono */
+}
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.highlight {
+  background-color: rgba(94, 194, 61, 0.709);; /* Ajusta el color de fondo según tus preferencias */
+  padding: 9 10px;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  opacity: 1;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}

@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Reservation } from 'src/app/interfaces/reservation';
 import { Schedule } from 'src/app/interfaces/schedule';
 import { CountryService } from 'src/app/services/country.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
+import { format } from 'date-fns';
+
 
 @Component({
   selector: 'app-buy-ticket',
@@ -15,7 +18,6 @@ import { ScheduleService } from 'src/app/services/schedule.service';
 })
 
 export class BuyTicketComponent implements OnInit {
-
   formReservation: FormGroup
   loading: boolean = false
   id: number
@@ -33,24 +35,26 @@ export class BuyTicketComponent implements OnInit {
   total: number = 0
   selectedForeing: boolean = false;
   selectedNational: boolean = true
-  listFrom: string[] = ['Nacional','Extranjero']
+  listFrom: string[] = ['Nacional', 'Extranjero']
+  listProvince: string[] = ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Puntarenas', 'Guanacaste', 'Limón']
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute,
     private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService) {
     this.formReservation = this.fb.group({
       fecha_reservacion: ['', Validators.required],
       horario: ['', Validators.required],
-      email: ['',Validators.required],
+      email: ['', Validators.required],
       detalle: ['', Validators.required],
       cantidad_campos_nacional: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
-      procedencia_nacional: ['',Validators.required],
+      procedencia_nacional: ['', Validators.required],
       cantidad_campos_extranjero: ['', [Validators.required, Validators.min(1), Validators.max(9)]],
-      procedencia_extranjera: ['',Validators.required],
-      selectedForeing:[''],
-      selectedNational: [true, ],
+      procedencia_extranjera: ['', Validators.required],
+      selectedForeing: [''],
+      selectedNational: [true,],
       selectFrom: ['Nacional']
     })
-      this.id = Number(aRouter.snapshot.paramMap.get('id'))
+
+    this.id = Number(aRouter.snapshot.paramMap.get('id'))
   }
 
   ngOnInit(): void {
@@ -59,15 +63,15 @@ export class BuyTicketComponent implements OnInit {
     if (this.id !== 0) {
       //this.getSchedule(this.id)
       this.createSchedule()
-    }  
+    }
   }
 
-  getCountry(){
+  getCountry() {
     this._countryService.getListCountry().subscribe({
-      next: (data:any) => {
-        console.log('paises:',data[10].name.common)
+      next: (data: any) => {
+        console.log('paises:', data[10].name.common)
         const response = data
-        for(const country of response){
+        for (const country of response) {
           this.country.push(country.name.common)
         }
       },
@@ -88,13 +92,13 @@ export class BuyTicketComponent implements OnInit {
         let dato = `${count}:00`
 
         if (count === 12) {
-          this.listSchedule.push(dato+ " pm")
+          this.listSchedule.push(dato + " pm")
           result = true
           count = 0
-        } else if(result){
-          this.listSchedule.push(dato+ " pm")
+        } else if (result) {
+          this.listSchedule.push(dato + " pm")
         } else {
-          this.listSchedule.push(dato+" am")
+          this.listSchedule.push(dato + " am")
         }
         count++
       }
@@ -105,27 +109,53 @@ export class BuyTicketComponent implements OnInit {
 
   }
 
-  getQuantityNational(){
+  getQuantityNational() {
     const value = this.formReservation.value.cantidad_campos_nacional
-    value===null? this.value_national:this.value_national = value*1000
-    this.iva_national = (this.value_national*0.13)
-    this.price_national = this.iva_national+this.value_national
-    this.total = parseFloat((this.price_national+(this.price_foreing*539.47)).toFixed(2))
+    value === null ? this.value_national : this.value_national = value * 1000
+    this.iva_national = (this.value_national * 0.13)
+    this.price_national = this.iva_national + this.value_national
+    this.total = parseFloat((this.price_national + (this.price_foreing * 539.47)).toFixed(2))
   }
-  getQuantityForeing(){
-    const value:number = this.formReservation.value.cantidad_campos_extranjero
-    value===null? this.value_foreing:this.value_foreing = value*10
-    this.iva_foreing = parseFloat((this.value_foreing*0.13).toFixed(2))
-    this.price_foreing = this.iva_foreing+this.value_foreing
-    this.total =parseFloat(((this.price_foreing*539.47)+this.price_national).toFixed(2))
+  getQuantityForeing() {
+    const value: number = this.formReservation.value.cantidad_campos_extranjero
+    value === null ? this.value_foreing : this.value_foreing = value * 10
+    this.iva_foreing = parseFloat((this.value_foreing * 0.13).toFixed(2))
+    this.price_foreing = this.iva_foreing + this.value_foreing
+    this.total = parseFloat(((this.price_foreing * 539.47) + this.price_national).toFixed(2))
   }
 
-  addReservation(){
-    console.log("me llamaron: ",this.formReservation.value.fecha_reservacion)
-    if(!this.formReservation.value.fecha_reservacion){
-      alert('hola')
+  addReservation() {
+    console.log("me llamaron: ", this.formReservation.value.fecha_reservacion)
+    if (!this.formReservation.value.fecha_reservacion) {
+      alert('El campo fecha no debe ser nulo')
     }
-    this.toastr.warning("Campo fecha falta por completar")
+    if (this.formReservation.value.cantidad_campos_nacional > 10 || this.formReservation.value.cantidad_campos_nacional < 0 ||
+      this.formReservation.value.cantidad_campos_extranjero > 10 || this.formReservation.value.cantidad_campos_extranjero < 0) {
+      alert('la cantidad de campos debe estar entre 0 y 10')
+    }
+    const quantityFields: number = this.formReservation.value.cantidad_campos_nacional > 0 ? this.formReservation.value.cantidad_campos_nacional : this.formReservation.value.cantidad_campos_extranjero
+    const nationality: string = this.formReservation.value.selectFrom
+    const origin: string = this.formReservation.value.selectFrom === 'Nacional' ? this.formReservation.value.procedencia_nacional : this.formReservation.value.procedencia_extranjera
+    const fecha = new Date();
+    const formatoDeseado = 'yyyy-MM-dd HH:mm:ss';
+    const fechaFormateada = format(fecha, formatoDeseado);
+
+    const reservation: Reservation = {
+      id_parque: this.id,
+      horario: this.formReservation.value.horario,
+      cantidad_campos: quantityFields,
+      fecha_reservacion: fechaFormateada,
+      total: this.total,
+      email: this.formReservation.value.email,
+      moneda: 'Colón',
+      procedencia: origin,
+      nacionalidad: nationality,
+      nombre_reservacin: this.formReservation.value.detalle
+
+    }
+
+    console.log('Reservacion: ', reservation)
+
   }
   getListSchedule() {
     this.loading = true
@@ -137,78 +167,14 @@ export class BuyTicketComponent implements OnInit {
     })
   }
 
-  onCheckboxChangeForeing(event: any) {
-    this.formReservation.patchValue({
-      cantidad_campos_nacional: 0
-    })
-    this.price_national = 0
-    this.iva_national = 0
-    this.total = 0
-
-    this.selectedForeing = event.target.checked
-    console.log('estado del checkbox: ',this.selectedForeing)
-    const cantidadCamposExtranjeroControl = this.formReservation.get('cantidad_campos_extranjero')
-    const selectProcedencia = this.formReservation.get('procedencia_extranjera')
-    if(cantidadCamposExtranjeroControl){
-      if (this.selectedForeing===true) {
-        this.formReservation.patchValue({
-          selectedNational: false
-        })
-        this.selectedNational = false
-        cantidadCamposExtranjeroControl.enable()
-        selectProcedencia?.enable()
-      } else if(this.selectedForeing===false) {
-        this.selectedNational = true
-        this.formReservation.patchValue({
-          selectedNational: true
-        })
-        cantidadCamposExtranjeroControl.disable()
-        selectProcedencia?.disable()
-      }
-    }
-  }
-
-  onCheckboxChangeNational(event: any) {
-
-    this.formReservation.patchValue({
-      cantidad_campos_extranjero: 0
-    })
-    this.price_foreing = 0
-    this.iva_foreing = 0
-    this.total = 0
-
-    this.selectedNational = event.target.checked
-    console.log('estado del checkbox: ',this.selectedNational)
-    const quantityFieldsNational = this.formReservation.get('cantidad_campos_nacional')
-    const selectProcedencia = this.formReservation.get('procedencia_nacional')
-    if(quantityFieldsNational){
-      if (this.selectedNational===true) {
-        this.formReservation.patchValue({
-          selectedForeing: false
-        })
-        this.selectedForeing = false
-        quantityFieldsNational.enable();
-        selectProcedencia?.enable()
-       
-      } else if(this.selectedNational===false) {
-        this.formReservation.patchValue({
-          selectedForeing: true
-        })
-        this.selectedForeing = true
-        quantityFieldsNational.disable();
-        selectProcedencia?.disable()
-      }
-    }
-  }
-
-  changeSelect(){
+  changeSelect() {
 
     const selectFromValue = this.formReservation.value.selectFrom
     console.log('list', this.listFrom)
-    if(selectFromValue){
-      if(selectFromValue==='Nacional'){
+    if (selectFromValue) {
+      if (selectFromValue === 'Nacional') {
         this.selectedNational = true
-        if (this.selectedNational===true) {
+        if (this.selectedNational === true) {
 
           this.formReservation.patchValue({
             cantidad_campos_extranjero: 0
@@ -221,14 +187,14 @@ export class BuyTicketComponent implements OnInit {
             selectedForeing: false
           })
           this.selectedForeing = false
-         
-        } else if(this.selectedNational===false) {
+
+        } else if (this.selectedNational === false) {
           this.formReservation.patchValue({
             selectedForeing: true
           })
           this.selectedForeing = true
         }
-      }else{
+      } else {
 
         this.formReservation.patchValue({
           cantidad_campos_nacional: 0
@@ -236,14 +202,14 @@ export class BuyTicketComponent implements OnInit {
         this.price_national = 0
         this.iva_national = 0
         this.total = 0
-        
+
         this.selectedForeing = true
-        if (this.selectedForeing===true) {
+        if (this.selectedForeing === true) {
           this.formReservation.patchValue({
             selectedNational: false
           })
           this.selectedNational = false
-        } else if(this.selectedForeing===false) {
+        } else if (this.selectedForeing === false) {
           this.selectedNational = true
           this.formReservation.patchValue({
             selectedNational: true

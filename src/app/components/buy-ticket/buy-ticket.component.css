@@ -5,7 +5,7 @@
 }
 
 .row{
-    background-color: rgb(227, 239, 239);
+    background-color: rgb(243, 246, 246);
     margin-left: 30%;
     margin-right: 15%;
 }
@@ -43,4 +43,8 @@
 
 #opciones-ng{
     background-color: aqua;
+}
+
+.button{
+    text-align: center;
 }

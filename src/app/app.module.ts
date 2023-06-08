@@ -32,6 +32,8 @@ import { AddEditComponent } from './components/park/add-edit/add-edit.component'
 import { FilterPipe } from './utils/filter.pipe';
 import { ListRolesComponent } from './components/list-roles/list-roles.component';
 import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.component';
+import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
+import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 
 @NgModule({
@@ -52,6 +54,8 @@ import { ListParkComponent } from './components/ticket/list-park/list-park.compo
     FilterPipe,
     ListRolesComponent,
     AddEditRoleComponent,
+    PruebasComponent,
+    BuyTicketComponent,
     ListParkComponent
   ],
   imports: [

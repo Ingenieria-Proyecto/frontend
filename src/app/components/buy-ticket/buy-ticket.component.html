@@ -1,0 +1,191 @@
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="mt-5">
+        <div class="col-md-10">
+
+            <form [formGroup]="formReservation" (ngSubmit)="addReservation()">
+                <div class="form-container">
+                    <div class="row">
+                        <div class="title">
+                            <h1>Reserva de volcan Poas</h1>
+                            <h3>Cantidad: 400</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-4">
+                                <input type="date" formControlName="fecha_reservacion" class="form-control mt-3"
+                                    id="floatingInput" placeholder="ingrese usuario">
+                                <label for="floatingInput">Fecha</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-4">
+                                <select formControlName="horario" class="form-control mt-3">
+                                    <option *ngFor="let item of listSchedule">{{ item }}</option>
+                                </select>
+                                <label for="floatingInput">Hora de llegada</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-4">
+                                <input type="email" formControlName="email" class="form-control mt-3" id="floatingInput"
+                                    placeholder="Correo electronico">
+                                <label for="floatingInput">Email</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-4">
+                                <input type="text" formControlName="detalle" class="form-control mt-3"
+                                    id="floatingInput" placeholder="ingrese nombre reserva">
+                                <label for="floatingInput">Nombre reservación</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fields-nationals">
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleSelect1" class="form-label mt-4">Seleccione el tipo de campo(*)</label><br/>
+                                <select formControlName="selectFrom" (click)="changeSelect()" class="form-select-sm"
+                                    id="selectFroms">
+                                    <option *ngFor="let item of listFrom">{{ item }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col" [style.display]="selectedNational? 'block':'none'">
+                                <div class="form-floating mb-4">
+                                    <input type="number" (click)="getQuantityNational()"
+                                        formControlName="cantidad_campos_nacional" class="form-control mt-3"
+                                        placeholder="ingrese cantidad">
+                                    <label for="floatingInput">Cantidad</label>
+                                </div>
+                            </div>
+
+                            <div class="col" [style.display]="selectedNational? 'block':'none'">
+                                <div class="form-floating mb-4">
+                                    <select class="form-control mt-3" formControlName="procedencia_nacional" name=""
+                                        id="">
+                                        <option *ngFor="let item of listProvince">{{ item }}</option>
+                                    </select>
+                                    <label for="floatingInput">Procedencia</label>
+                                </div>
+                            </div>
+                            <div class="col" [style.display]="selectedNational? 'block':'none'">
+                                <div class="iva-colones">
+                                    <h5>Precio</h5>
+                                    <span class="badge rounded-pill bg-primary">C {{value_national}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fields-foreings">
+
+                        <div class="row">
+
+                            <div class="col" [style.display]="selectedForeing? 'block':'none'">
+                                <div class="form-floating mb-4">
+                                    <input type="number" (click)="getQuantityForeing()" formControlName="cantidad_campos_extranjero" class="form-control mt-3" id="floatingInput" placeholder="ingrese cantidad">
+                                    <label for="floatingInput">Cantidad</label>
+                                </div>
+                            </div>
+                            <div class="col" [style.display]="selectedForeing? 'block':'none'">
+                                <div class="form-floating mb-4">
+                                    <ng-select formControlName="procedencia_extranjera" class="form-control mt-3"
+                                        name="" id="select-ng">
+                                        <ng-option style="background-color: aqua;" *ngFor="let item of country"
+                                            [value]="item" id="opciones-ng">{{item}}</ng-option>
+                                    </ng-select>
+                                    <label for="floatingInput">Procedencia</label>
+                                </div>
+                            </div>
+                            <div class="col" [style.display]="selectedForeing? 'block':'none'">
+                                <div class="iva-colones">
+                                    <h4>Precio</h4>
+                                    <span class="badge rounded-pill bg-primary">$ {{value_foreing}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dollars" [style.display]="selectedForeing? 'block':'none'">
+                        <div class="row">
+                            <div class="col">
+                                <div class="subtotal-dolares">
+                                    <label class="form-label" for="disabledInput">Subtotal dolares: </label>
+                                    <span class="badge rounded-pill bg-primary">$ {{value_foreing}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="iva-dolares">
+                                    <label class="form-label" for="disabledInput">I.V.A: </label>
+                                    <span class="badge rounded-pill bg-primary">$ {{iva_foreing}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="total-dolares">
+                                    <label class="form-label" for="disabledInput">Total dólares: </label>
+                                    <span class="badge rounded-pill bg-primary">$ {{price_foreing}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="colon" [style.display]="selectedNational? 'block':'none'">
+                        <div class="row">
+                            <div class="col">
+                                <div class="subtotal-colones">
+                                    <label class="form-label" for="disabledInput">Subtotal colones: </label>
+                                    <span class="badge rounded-pill bg-primary">₡ {{value_national}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="iva-colones">
+                                    <label class="form-label" for="disabledInput">I.V.A: </label>
+                                    <span class="badge rounded-pill bg-primary">₡ {{iva_national}}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="total-colones">
+                                    <label class="form-label" for="disabledInput">Total colones: </label>
+                                    <span class="badge rounded-pill bg-primary">₡ {{price_national}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 class="total">Total en colones: ₡{{total}}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="button">
+                            <button class="btn btn-primary">Enviar</button><br/>
+                        </div>
+                        <h1></h1>
+                        <br/>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <br />
+</div>

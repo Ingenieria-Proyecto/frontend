@@ -47,22 +47,22 @@ export class AddEditRateComponent implements OnInit{
     private router: Router, private toastr: ToastrService, private _errorService: ErrorService,
     private aRouter: ActivatedRoute) {
 
-    this.formRate = this.fb.group({
-      fk_parque: ['', Validators.required],
-      precio_nacional: ['', Validators.required],
-      precio_extranjero: ['', Validators.required]
-    })
+      this.formRate = this.fb.group({
+        fk_parque: ['', Validators.required],
+        precio_nacional: ['', [Validators.required, Validators.min(0), Validators.max(10000), Validators.pattern(/^[0-9]+$/)]],
+        precio_extranjero: ['', [Validators.required, Validators.min(0)]]
+      });
     this.id = Number(aRouter.snapshot.paramMap.get('id'))
   }
 
-  
+
   ngOnInit(): void {
     if (this.id != 0) {
       this.operacion = 'Editar '
       this.getRate(this.id)
     }
   }
-  
+
   getRate(id: number) {
     this.loading = true
     this._rateService.getRate(id).subscribe((data: Rate) => {

@@ -26,8 +26,9 @@ export class ParkService {
   }
 
 
-  deleteProduct(id: number): Observable<void>{
-    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`+'/'+id)
+  deleteProduct(id: number, nombre:string): Observable<void>{
+    const nameClient = {nombre_Admin: nombre}
+    return this.http.delete<void>(`${this.myAppUrl}${this.myApiUrl}`+'/'+id, { body: nameClient })
   }
 
   addPark(park: Park): Observable<any>{

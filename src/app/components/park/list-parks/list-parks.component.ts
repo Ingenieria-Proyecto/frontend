@@ -24,6 +24,7 @@ export class ListParksComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('user'));
     this.dtOptions = {
       pagingType: 'full_numbers',
       searching: true,
@@ -56,7 +57,7 @@ export class ListParksComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this._parkService.deleteProduct(id).subscribe(() => {
+        this._parkService.deleteProduct(id, ""+localStorage.getItem('user')).subscribe(() => {
           this.getListParks();
           this.toastr.warning('El parque fue eliminado con éxito', 'Parque eliminado');
         });

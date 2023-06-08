@@ -1,12 +1,15 @@
 <app-navbar></app-navbar>
 <app-progress-bar *ngIf="loading"></app-progress-bar>
+<br><br>
 <div class="container">
-    
-    <div class="title" *ngIf="!loading">
-        <h4>Listado de Tarifas</h4>
-        <button type="button" class="btn btn-outline-success" routerLink="/addRate">Add +</button>
-    </div><br>
-    <table datatable [dtOptions]="dtOptions" *ngIf="listRates.length > 0 && type_user!=='usuario'" class="table table-striped table-hover">
+  <div class="d-flex justify-content-between align-items-center form-title">
+    Listado de tarifas
+      <button class="custom-green-btn" routerLink="/addRate" style="font-size: small;">
+        <i class="bi bi-plus"></i>Agregar tarifa
+      </button>
+  </div>
+  <br>
+    <table datatable [dtOptions]="dtOptions" *ngIf="listRates.length > 0 " class="table table-striped table-hover">
         <thead>
           <tr class="table-secondary">
             <th scope="col">Id</th>
@@ -23,8 +26,8 @@
             <td>{{item.precio_nacional}}</td>
             <td>{{item.precio_extranjero | currency}}</td>
             <td>
-                <button routerLink="/editRate/{{item.id}}" type="button" class="btn btn-warning btn-sm">Edit</button>
-                <button (click)="deleteRate(item.id!)" type="button" class="btn btn-danger btn-sm ms-2">Delete</button>
+                <button routerLink="/editRate/{{item.id}}"type="button" class="btn btn-outline-warning btn-sm ms-2"><i class="bi bi-pencil"></i></button>
+                <button (click)="deleteRate(item.id!)" type="button" class="btn btn-outline-danger btn-sm ms-2"><i class="bi bi-trash"></i></button>
             </td>
           </tr>
         </tbody>

@@ -1,4 +1,25 @@
 .dataTables_filter label::before {
     content: "Nuevo texto: ";
   }
-  
+
+  .form-title {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #56ad68ce;
+    letter-spacing: 0.1rem;
+    background-color: #3aa05c8f
+    ;
+    color: white;
+    padding: 0.5rem;
+    margin: 0; /* Elimina cualquier margen */
+  }
+
+  .container {
+    padding: 0; /* Elimina cualquier padding */
+  }
+
+  .custom-green-btn {
+    background-color: #44b344a2; /* Reemplaza este valor con tu tono de verde personalizado */
+    border-color: #44b344a2; /* Opcional: si deseas que el borde tenga el mismo color */
+    color: white; /* Opcional: si deseas que el texto sea blanco para contrastar con el fondo */
+  }

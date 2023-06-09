@@ -9,6 +9,7 @@ import { CountryService } from 'src/app/services/country.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { format } from 'date-fns';
+import { ReservationService } from 'src/app/services/reservation.service';
 
 
 @Component({
@@ -37,17 +38,18 @@ export class BuyTicketComponent implements OnInit {
   selectedNational: boolean = true
   listFrom: string[] = ['Nacional', 'Extranjero']
   listProvince: string[] = ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Puntarenas', 'Guanacaste', 'Limón']
+  fields:string = ""
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute,
-    private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService) {
+    private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService) {
     this.formReservation = this.fb.group({
       fecha_reservacion: ['', Validators.required],
       horario: ['', Validators.required],
       email: ['', Validators.required],
       detalle: ['', Validators.required],
-      cantidad_campos_nacional: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      cantidad_campos_nacional: ['0', [Validators.required, Validators.min(1), Validators.max(10)]],
       procedencia_nacional: ['', Validators.required],
-      cantidad_campos_extranjero: ['', [Validators.required, Validators.min(1), Validators.max(9)]],
+      cantidad_campos_extranjero: ['0', [Validators.required, Validators.min(1), Validators.max(9)]],
       procedencia_extranjera: ['', Validators.required],
       selectedForeing: [''],
       selectedNational: [true,],
@@ -60,10 +62,31 @@ export class BuyTicketComponent implements OnInit {
   ngOnInit(): void {
     this.getListSchedule()
     this.getCountry()
+    this.getFields()
     if (this.id !== 0) {
       //this.getSchedule(this.id)
       this.createSchedule()
     }
+  }
+
+  getFields(){
+    const fecha = new Date()
+    const formatoDeseado = 'yyyy-MM-dd';
+    const fechaFormateada = format(fecha, formatoDeseado)
+
+    const date = {
+      date_actual: fechaFormateada
+    }
+    console.log('fecha: ',date)
+    this._reservationService.getFieldsEMpty(date).subscribe({
+      next: (data: any) => {
+        console.log(data.disponible)
+        this.fields = data.disponible
+      },
+      error: (error: HttpErrorResponse) => {
+        this._errorService.msjError(error)
+      }
+    })
   }
 
   getCountry() {
@@ -125,13 +148,10 @@ export class BuyTicketComponent implements OnInit {
   }
 
   addReservation() {
-    console.log("me llamaron: ", this.formReservation.value.fecha_reservacion)
-    if (!this.formReservation.value.fecha_reservacion) {
-      alert('El campo fecha no debe ser nulo')
-    }
-    if (this.formReservation.value.cantidad_campos_nacional > 10 || this.formReservation.value.cantidad_campos_nacional < 0 ||
-      this.formReservation.value.cantidad_campos_extranjero > 10 || this.formReservation.value.cantidad_campos_extranjero < 0) {
-      alert('la cantidad de campos debe estar entre 0 y 10')
+    if (!this.formReservation.value.fecha_reservacion || !this.formReservation.value.email || !this.formReservation.value.horario) {
+      alert('los campos no deben estar vacios')
+      this.toastr.warning('los campos no deben estar vacios')
+      return
     }
     const quantityFields: number = this.formReservation.value.cantidad_campos_nacional > 0 ? this.formReservation.value.cantidad_campos_nacional : this.formReservation.value.cantidad_campos_extranjero
     const nationality: string = this.formReservation.value.selectFrom
@@ -139,6 +159,17 @@ export class BuyTicketComponent implements OnInit {
     const fecha = new Date();
     const formatoDeseado = 'yyyy-MM-dd HH:mm:ss';
     const fechaFormateada = format(fecha, formatoDeseado);
+
+    if (quantityFields > 10 || quantityFields< 1) {
+      alert('la cantidad de campos debe estar entre 0 y 10')
+      this.toastr.warning('la cantidad de campos debe estar entre 0 y 10')
+      return
+    }
+    if(!origin){
+      alert("No selecciono procedencia")
+      this.toastr.warning('Debe seleccionar la procedencia')
+      return
+    }
 
     const reservation: Reservation = {
       id_parque: this.id,
@@ -150,9 +181,20 @@ export class BuyTicketComponent implements OnInit {
       moneda: 'Colón',
       procedencia: origin,
       nacionalidad: nationality,
-      nombre_reservacin: this.formReservation.value.detalle
-
+      nombre_reservacion: this.formReservation.value.detalle
     }
+
+    this._reservationService.saveReservation(reservation).subscribe({
+      next: (data: any) => {
+        console.log('realizando reserva: ',data)
+        this.toastr.success(data.msg)
+      },
+      error: (error: HttpErrorResponse) => {
+        this._errorService.msjError(error)
+      }
+    })
+
+
 
     console.log('Reservacion: ', reservation)
 

@@ -4,7 +4,7 @@ export interface Reservation{
     horario: string
     email: string
     fecha_reservacion: string
-    nombre_reservacin: string
+    nombre_reservacion: string
     nacionalidad: string
     procedencia: string
     moneda: string

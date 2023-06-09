@@ -17,6 +17,7 @@ import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.c
 import { UsersGuard } from './utils/users.guard';
 import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
 import { PruebasComponent } from './components/pruebas/pruebas.component';
+import { AdministrativeListComponent } from './components/ticket/administrative-list/administrative-list.component';
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'editRole/:id', component: AddEditRoleComponent},
   {path: 'reservation/:id', component: BuyTicketComponent},
   {path: 'indexTicket', component: ListParkComponent},
+  {path: 'administrative', component: AdministrativeListComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

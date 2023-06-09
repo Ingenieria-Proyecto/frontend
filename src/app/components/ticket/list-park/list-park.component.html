@@ -20,12 +20,12 @@
   <div class="row" style="margin: 10px 0">
     <div class="col-md-3" style="margin: 20px 0" *ngFor="let card of paginatedParks">
       <mat-card style="border: none; background-color: #d0d0d000; overflow: hidden; position: relative;">
-        <a mat-button [routerLink]="'/vistaLectura/' + card.id">
+        <a mat-button [routerLink]="'/reservation/' + card.id">
           <div class="image-overlay"></div>
-        <img class="mat-card-image" src="https://costaricasinfiltros.com/wp-content/gallery/palo-verde/001.jpg" alt="Card Image"
+        <img class="mat-card-image"  [src]="'https://cdn.glitch.global/c8741137-7561-4ba9-b14e-9163ffec5828/' + card.id + '.jpg'" alt="Card Image"
           style="
-            width: 100%;
-            height: 100%;
+            width: 300px;
+            height: 200px;
             object-fit: cover;
             object-position: center;
             cursor: pointer;

@@ -35,6 +35,7 @@ import { AddEditRoleComponent } from './components/add-edit-role/add-edit-role.c
 import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component';
 import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
+import { AdministrativeListComponent } from './components/ticket/administrative-list/administrative-list.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ListParkComponent } from './components/ticket/list-park/list-park.compo
     AddEditRoleComponent,
     PruebasComponent,
     BuyTicketComponent,
-    ListParkComponent
+    ListParkComponent,
+    AdministrativeListComponent
   ],
   imports: [
     MatCardModule,

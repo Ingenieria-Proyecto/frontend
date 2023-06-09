@@ -31,7 +31,7 @@ export class AddEditComponent implements OnInit {
   ) {
     this.formProduct = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(60)]],
-      visitas: ['', [Validators.required, Validators.max(20000), Validators.min(1)]]
+      visitas: ['', [Validators.required, Validators.max(10000), Validators.min(100)]]
     });
     this.id = Number(aRouter.snapshot.paramMap.get('id'));
   }
@@ -76,7 +76,8 @@ export class AddEditComponent implements OnInit {
   addProduct = () => {
     const park: Park = {
       nombre: this.formProduct.value.nombre,
-      visitas: this.formProduct.value.visitas
+      visitas: this.formProduct.value.visitas,
+      nombre_Admin: ""+localStorage.getItem('user')
     };
     this.loading = true
     if (this.id !== 0) {

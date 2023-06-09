@@ -12,6 +12,8 @@ import { format } from 'date-fns';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { ParkService } from 'src/app/services/park.service';
 import { Park } from 'src/app/interfaces/park';
+import { RatesService } from 'src/app/services/rates.service';
+import { Rate } from 'src/app/interfaces/rate';
 
 
 @Component({
@@ -42,9 +44,10 @@ export class BuyTicketComponent implements OnInit {
   listProvince: string[] = ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Puntarenas', 'Guanacaste', 'Limón']
   fields:string = ""
   name_park: string = ""
+  minDate: string;
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute, private _parkService: ParkService,
-    private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService) {
+    private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService, private _rateServuce: RatesService) {
     this.formReservation = this.fb.group({
       fecha_reservacion: ['', Validators.required],
       horario: ['', Validators.required],
@@ -58,7 +61,8 @@ export class BuyTicketComponent implements OnInit {
       selectedNational: [true,],
       selectFrom: ['Nacional']
     })
-
+    const today = new Date();
+    this.minDate = this.formatDate(today);
     this.id = Number(aRouter.snapshot.paramMap.get('id'))
   }
 
@@ -67,12 +71,30 @@ export class BuyTicketComponent implements OnInit {
     this.getCountry()
     this.getFields()
     this.getNamePark()
+    this.getRate()
     if (this.id !== 0) {
       //this.getSchedule(this.id)
       this.createSchedule()
     }
   }
-
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+  
+  getRate(){
+    this._rateServuce.getRate(this.id).subscribe({
+      next: (data: Rate) => {
+        console.log('rate: ',data)
+        this.value_national = data.precio_nacional
+        this.value_foreing = data.precio_extranjero
+      },
+      error: (error: any) => {
+      }
+    })
+  }
   getNamePark(){
     this._parkService.getPark(this.id).subscribe({
       next: (data: Park) => {

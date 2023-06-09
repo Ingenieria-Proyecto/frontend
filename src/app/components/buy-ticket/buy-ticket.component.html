@@ -8,7 +8,7 @@
                 <div class="form-container">
                     <div class="row">
                         <div class="title">
-                            <h1>Reserva de volcan Poas</h1>
+                            <h1>Reserva de {{name_park}}</h1>
                             <h3>Cantidad: {{fields}}</h3>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             <div class="form-floating mb-4">
                                 <input type="text" formControlName="detalle" class="form-control mt-3"
                                     id="floatingInput" placeholder="ingrese nombre reserva">
-                                <label for="floatingInput">Nombre reservación</label>
+                                <label for="floatingInput">Detalle reservación</label>
                             </div>
                         </div>
                     </div>
@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                             <div class="col" [style.display]="selectedNational? 'block':'none'">
-                                <div class="iva-colones">
-                                    <h5>Precio</h5>
-                                    <span class="badge rounded-pill bg-primary">C {{value_national}}</span>
+                                <div class="precio">
+                                    <h4>Precio</h4>
+                                    <span class="badge rounded-pill bg-secondary">C {{value_national}}</span>
                                 </div>
 
                             </div>
@@ -107,9 +107,9 @@
                                 </div>
                             </div>
                             <div class="col" [style.display]="selectedForeing? 'block':'none'">
-                                <div class="iva-colones">
+                                <div class="precio">
                                     <h4>Precio</h4>
-                                    <span class="badge rounded-pill bg-primary">$ {{value_foreing}}</span>
+                                    <span class="badge rounded-pill bg-secondary">$ {{value_foreing}}</span>
                                 </div>
 
                             </div>
@@ -120,7 +120,7 @@
                             <div class="col">
                                 <div class="subtotal-dolares">
                                     <label class="form-label" for="disabledInput">Subtotal dolares: </label>
-                                    <span class="badge rounded-pill bg-primary">$ {{value_foreing}}</span>
+                                    <span class="badge rounded-pill bg-secondary">$ {{value_foreing}}</span>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                             <div class="col">
                                 <div class="iva-dolares">
                                     <label class="form-label" for="disabledInput">I.V.A: </label>
-                                    <span class="badge rounded-pill bg-primary">$ {{iva_foreing}}</span>
+                                    <span class="badge rounded-pill bg-secondary">$ {{iva_foreing}}</span>
                                 </div>
 
                             </div>
@@ -137,7 +137,7 @@
                             <div class="col">
                                 <div class="total-dolares">
                                     <label class="form-label" for="disabledInput">Total dólares: </label>
-                                    <span class="badge rounded-pill bg-primary">$ {{price_foreing}}</span>
+                                    <span class="badge rounded-pill bg-secondary">$ {{price_foreing}}</span>
                                 </div>
 
                             </div>
@@ -148,7 +148,7 @@
                             <div class="col">
                                 <div class="subtotal-colones">
                                     <label class="form-label" for="disabledInput">Subtotal colones: </label>
-                                    <span class="badge rounded-pill bg-primary">₡ {{value_national}}</span>
+                                    <span class="badge rounded-pill bg-secondary">₡ {{value_national}}</span>
                                 </div>
 
                             </div>
@@ -157,7 +157,7 @@
                             <div class="col">
                                 <div class="iva-colones">
                                     <label class="form-label" for="disabledInput">I.V.A: </label>
-                                    <span class="badge rounded-pill bg-primary">₡ {{iva_national}}</span>
+                                    <span class="badge rounded-pill bg-secondary">₡ {{iva_national}}</span>
                                 </div>
 
                             </div>
@@ -166,17 +166,23 @@
                             <div class="col">
                                 <div class="total-colones">
                                     <label class="form-label" for="disabledInput">Total colones: </label>
-                                    <span class="badge rounded-pill bg-primary">₡ {{price_national}}</span>
+                                    <span class="badge rounded-pill bg-secondary">₡ {{price_national}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <h3 class="total">Total en colones: ₡{{total}}</h3>
+                        <div class="col">
+                            <div class="total">
+                                <h3>Total: ₡{{total}}</h3>
+                            </div>
+                        </div>
+                        
+                        
                     </div>
                     <div class="row">
-                        <div class="button">
-                            <button class="btn btn-primary">Enviar</button><br/>
+                        <div class="button mt-4">
+                            <button class="btn btn-secondary">Reservar</button><br/>
                         </div>
                         <h1></h1>
                         <br/>

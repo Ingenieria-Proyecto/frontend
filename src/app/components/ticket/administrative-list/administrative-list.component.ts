@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import Swal from 'sweetalert2';
 
-import { ReservacionService } from 'src/app/services/reservation.service';
+import { ReservationService } from 'src/app/services/reservation.service';
 import { Reservation } from 'src/app/interfaces/reservation'
 import { ParkService } from 'src/app/services/park.service';
 import { Park } from 'src/app/interfaces/park';;
@@ -23,7 +23,7 @@ export class AdministrativeListComponent implements OnInit{
   dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
-    private _reservationService: ReservacionService, private _parkService: ParkService,
+    private _reservationService: ReservationService, private _parkService: ParkService,
     private toastr: ToastrService
   ) {}
 

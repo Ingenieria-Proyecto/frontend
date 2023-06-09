@@ -11,21 +11,27 @@
 }
 .subtotal-dolares{
     text-align: right;
+    margin-right: 21%;
 }
 .iva-dolares{
     text-align: right;
+    margin-right: 21%;
 }
 .total-dolares{
     text-align: right;
+    margin-right: 21%;
 }
 .subtotal-colones{
     text-align: right;
+    margin-right: 21%;
 }
 .iva-colones{
     text-align: right;
+    margin-right: 21%;
 }
 .total-colones{
     text-align: right;
+    margin-right: 21%;
 }
 
 .form-check{
@@ -34,6 +40,11 @@
 
 .total{
     text-align: right;
+    margin-right: 21%;
+}
+
+.precio{
+
 }
 
 

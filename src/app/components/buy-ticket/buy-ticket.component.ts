@@ -10,6 +10,8 @@ import { ErrorService } from 'src/app/services/error.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { format } from 'date-fns';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { ParkService } from 'src/app/services/park.service';
+import { Park } from 'src/app/interfaces/park';
 
 
 @Component({
@@ -39,8 +41,9 @@ export class BuyTicketComponent implements OnInit {
   listFrom: string[] = ['Nacional', 'Extranjero']
   listProvince: string[] = ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Puntarenas', 'Guanacaste', 'Limón']
   fields:string = ""
+  name_park: string = ""
 
-  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute,
+  constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute, private _parkService: ParkService,
     private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService) {
     this.formReservation = this.fb.group({
       fecha_reservacion: ['', Validators.required],
@@ -63,10 +66,22 @@ export class BuyTicketComponent implements OnInit {
     this.getListSchedule()
     this.getCountry()
     this.getFields()
+    this.getNamePark()
     if (this.id !== 0) {
       //this.getSchedule(this.id)
       this.createSchedule()
     }
+  }
+
+  getNamePark(){
+    this._parkService.getPark(this.id).subscribe({
+      next: (data: Park) => {
+        this.name_park = data.nombre
+      },
+      error: (error: HttpErrorResponse) => {
+        this._errorService.msjError(error)
+      }
+    })
   }
 
   getFields(){

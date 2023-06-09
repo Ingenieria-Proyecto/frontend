@@ -10,4 +10,6 @@ export interface Reservation{
     moneda: string
     cantidad_campos: number
     total: number
+    nombre_Admin?: string
+    nombre_parque?: string;
 }

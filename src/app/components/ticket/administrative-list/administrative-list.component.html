@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<br><br>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center form-title">
+    Listado de Reservaciones
+
+  </div>
+  <br>
+  <table datatable [dtOptions]="dtOptions" *ngIf="list.length > 0" class="table table-striped table-auto">
+    <thead>
+      <tr>
+        <th >Número de reservacion</th>
+        <th >Parque</th>
+        <th >Fecha de la reservación</th>
+        <th >Cantidad de campos reservados</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of list">
+        <td>{{ item.id_reservacion }}</td>
+        <td>{{ item.nombre_parque  }}</td>
+        <td>{{ item.fecha_reservacion }}</td>
+        <td>{{ item.cantidad_campos }}</td>
+        <td>
+          <button (click)="deleteReservation(item.id_reservacion!)" type="button" class="btn btn-outline-danger btn-sm ms-2">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {Subject} from 'rxjs';
 import Swal from 'sweetalert2';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ReservationService } from 'src/app/services/reservation.service';
 import { Reservation } from 'src/app/interfaces/reservation'
 import { ParkService } from 'src/app/services/park.service';
-import { Park } from 'src/app/interfaces/park';;
+import { Park } from 'src/app/interfaces/park';
+import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
 
 @Component({
   selector: 'app-administrative-list',
@@ -21,10 +23,12 @@ export class AdministrativeListComponent implements OnInit{
   email: string = localStorage.getItem("user") || ""
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  modalRef?: BsModalRef;
+
 
   constructor(
     private _reservationService: ReservationService, private _parkService: ParkService,
-    private toastr: ToastrService
+    private toastr: ToastrService, private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
@@ -38,8 +42,8 @@ export class AdministrativeListComponent implements OnInit{
         url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
       }
     }
-    this.getListReservation();
     this.getListParks();
+    this.getListReservation();
     console.log(this.list)
   }
 
@@ -61,6 +65,9 @@ export class AdministrativeListComponent implements OnInit{
       this.list.forEach((reservation: Reservation) => {
         const park = this.parks.find((p: Park) => p.id === reservation.id_parque);
         reservation.nombre_parque = park ? park.nombre : 'Nombre no encontrado';
+
+        const fechaReservacion = new Date(reservation.fecha_reservacion);
+        reservation.fecha_reservacion = fechaReservacion.toLocaleDateString();
       });
 
       this.loading = false;
@@ -85,6 +92,14 @@ export class AdministrativeListComponent implements OnInit{
         });
       }
     });
+  }
+
+
+  openModal(reservation: Reservation) {
+    const initialState = {
+      reservation: reservation
+    };
+    this.modalRef = this.modalService.show(ReservationModalComponent, { initialState });
   }
 
 }

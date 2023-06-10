@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title">Detalles de la Reservación</h4>
+  <button type="button" class=" btn close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="reservation">
+    <p><strong>ID de la reservación:</strong> {{ reservation.id_reservacion }}</p>
+    <p><strong>Nombre del parque:</strong> {{ reservation.nombre_parque }}</p>
+    <p><strong>Fecha de la reservación:</strong> {{ reservation.fecha_reservacion }}</p>
+    <p><strong>Contacto:</strong> {{ reservation.email }}</p>
+    <p><strong>Cantidad de campos reservados:</strong> {{ reservation.cantidad_campos }}</p>
+    <p><strong>Tipo de reserva</strong> {{ reservation.nacionalidad }}</p>
+    <p><strong>Total = ₡</strong> {{ reservation.total }}</p>
+    <!-- Add more reservation details here if needed -->
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Cerrar</button>
+</div>

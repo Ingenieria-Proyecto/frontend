@@ -1,3 +1,23 @@
-.btn {
-    margin-left: 75%;
+.btn-secondary {
+    margin-left: 10%;
+}
+
+#navbar-id{
+    background-color: rgba(94, 194, 61, 0.709);
+    width: 100%;
+    
+}
+
+#navbarColor01{
+    margin-left: 32%;
+    padding: 9 10px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+}
+
+#title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
 }

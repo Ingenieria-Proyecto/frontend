@@ -65,6 +65,15 @@
 }
 
 .value{
-    margin-top: -4.5%;
+    margin-top: -6%;
     margin-left: 35%;
+}
+
+.title{
+    background-color: rgba(94, 194, 61, 0.709);
+    padding: 9 10px;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    opacity: 1;
+    font-family: Arial, Helvetica, sans-serif;
 }

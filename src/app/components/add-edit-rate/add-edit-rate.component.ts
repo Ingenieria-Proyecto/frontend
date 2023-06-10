@@ -28,8 +28,8 @@ export class AddEditRateComponent implements OnInit{
 
       this.formRate = this.fb.group({
         fk_parque: ['', Validators.required],
-        precio_nacional: ['', [Validators.required, Validators.min(0), Validators.max(10000), Validators.pattern(/^[0-9]+$/)]],
-        precio_extranjero: ['', [Validators.required, Validators.min(0)]]
+        precio_nacional: ['', [Validators.required, Validators.min(0), Validators.max(60000), Validators.pattern(/^[0-9]+$/)]],
+        precio_extranjero: ['', [Validators.required, Validators.min(0),  Validators.max(50), Validators.pattern(/^[0-9]+$/)]]
       });
     this.id = Number(aRouter.snapshot.paramMap.get('id'))
   }
@@ -71,6 +71,15 @@ export class AddEditRateComponent implements OnInit{
       fk_parque: this.formRate.value.fk_parque,
       precio_nacional: this.formRate.value.precio_nacional,
       precio_extranjero: this.formRate.value.precio_extranjero
+    }
+
+    if(rate.precio_nacional>0 && rate.precio_nacional<50000){
+      this.toastr.warning("El precio no debe de superar los c50.000")
+      return
+    }
+    if(rate.precio_extranjero>0 && rate.precio_extranjero<50){
+      this.toastr.warning("El precio no debe de superar los $50")
+      return
     }
 
     this.loading = true

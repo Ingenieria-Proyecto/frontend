@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {DataTablesModule} from 'angular-datatables';
 import { MatCardModule } from '@angular/material/card';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 //Componentes
@@ -36,6 +37,7 @@ import { BuyTicketComponent } from './components/buy-ticket/buy-ticket.component
 import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 import { AdministrativeListComponent } from './components/ticket/administrative-list/administrative-list.component';
+import { ReservationModalComponent } from './components/ticket/reservation-modal/reservation-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { AdministrativeListComponent } from './components/ticket/administrative-
     PruebasComponent,
     BuyTicketComponent,
     ListParkComponent,
-    AdministrativeListComponent
+    AdministrativeListComponent,
+    ReservationModalComponent
   ],
   imports: [
     MatCardModule,
@@ -70,6 +73,7 @@ import { AdministrativeListComponent } from './components/ticket/administrative-
     FormsModule,
     BrowserAnimationsModule,
     NgSelectModule,
+    ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',

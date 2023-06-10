@@ -9,14 +9,15 @@
                     <div class="row">
                         <div class="title">
                             <h1>Reserva de {{name_park}}</h1>
-                            <h3>Cantidad: {{fields}}</h3>
+                            <h2>Cantidad: {{fields}}</h2>
+                            <h4>Precio: {{value_national}}</h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-4">
-                                <input type="date" [min]="minDate" formControlName="fecha_reservacion" class="form-control mt-3"
-                                    id="floatingInput" placeholder="ingrese usuario">
+                                <input type="date" [min]="minDate" formControlName="fecha_reservacion"
+                                    class="form-control mt-3" id="floatingInput" placeholder="ingrese usuario">
                                 <label for="floatingInput">Fecha</label>
                             </div>
                         </div>
@@ -25,7 +26,7 @@
                                 <select formControlName="horario" class="form-control mt-3">
                                     <option *ngFor="let item of listSchedule">{{ item }}</option>
                                 </select>
-                                <label for="floatingInput">Hora de llegada</label>
+                                <label for="floatingInput">Grupo de llegada</label>
                             </div>
                         </div>
                     </div>
@@ -50,7 +51,8 @@
                     <div class="fields-nationals">
                         <div class="row">
                             <div class="col">
-                                <label for="exampleSelect1" class="form-label mt-4">Seleccione el tipo de campo(*)</label><br/>
+                                <label for="exampleSelect1" class="form-label mt-4">Seleccione el tipo de
+                                    campo(*)</label><br />
                                 <select formControlName="selectFrom" (click)="changeSelect()" class="form-select-sm"
                                     id="selectFroms">
                                     <option *ngFor="let item of listFrom">{{ item }}</option>
@@ -77,13 +79,6 @@
                                     <label for="floatingInput">Procedencia</label>
                                 </div>
                             </div>
-                            <div class="col" [style.display]="selectedNational? 'block':'none'">
-                                <div class="precio">
-                                    <h4>Precio</h4>
-                                    <span class="badge rounded-pill bg-secondary">C {{value_national}}</span>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
                     <div class="fields-foreings">
@@ -92,23 +87,18 @@
 
                             <div class="col" [style.display]="selectedForeing? 'block':'none'">
                                 <div class="form-floating mb-4">
-                                    <input type="number" (click)="getQuantityForeing()" formControlName="cantidad_campos_extranjero" class="form-control mt-3" id="floatingInput" placeholder="ingrese cantidad">
+                                    <input type="number" (click)="getQuantityForeing()"
+                                        formControlName="cantidad_campos_extranjero" class="form-control mt-3"
+                                        id="floatingInput" placeholder="ingrese cantidad">
                                     <label for="floatingInput">Cantidad</label>
                                 </div>
                             </div>
                             <div class="col" [style.display]="selectedForeing? 'block':'none'">
-                                    <ng-select formControlName="procedencia_extranjera" class="form-control mt-3"
-                                        name="" id="select-ng">
-                                        <ng-option style="background-color: aqua;" *ngFor="let item of country"
-                                            [value]="item" id="opciones-ng">{{item}}</ng-option>
-                                    </ng-select>
-                            </div>
-                            <div class="col" [style.display]="selectedForeing? 'block':'none'">
-                                <div class="precio">
-                                    <h4>Precio</h4>
-                                    <span class="badge rounded-pill bg-secondary">$ {{value_foreing}}</span>
-                                </div>
-
+                                <ng-select formControlName="procedencia_extranjera" class="form-control mt-3" name=""
+                                    id="select-ng">
+                                    <ng-option style="background-color: aqua;" *ngFor="let item of country"
+                                        [value]="item" id="opciones-ng">{{item}}</ng-option>
+                                </ng-select>
                             </div>
                         </div>
                     </div>
@@ -117,7 +107,9 @@
                             <div class="col">
                                 <div class="subtotal-dolares">
                                     <label class="form-label" for="disabledInput">Subtotal dolares: </label>
-                                    <span class="badge rounded-pill bg-secondary">$ {{value_foreing}}</span>
+                                </div>
+                                <div class="value">
+                                    <span class="badge rounded-pill bg-secondary">$ {{subTotalForeing}}</span>
                                 </div>
                             </div>
                         </div>
@@ -125,6 +117,8 @@
                             <div class="col">
                                 <div class="iva-dolares">
                                     <label class="form-label" for="disabledInput">I.V.A: </label>
+                                </div>
+                                <div class="value">
                                     <span class="badge rounded-pill bg-secondary">$ {{iva_foreing}}</span>
                                 </div>
 
@@ -134,18 +128,22 @@
                             <div class="col">
                                 <div class="total-dolares">
                                     <label class="form-label" for="disabledInput">Total dólares: </label>
+                                </div>
+                                <div class="value">
                                     <span class="badge rounded-pill bg-secondary">$ {{price_foreing}}</span>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                     <div class="colon" [style.display]="selectedNational? 'block':'none'">
+
                         <div class="row">
                             <div class="col">
                                 <div class="subtotal-colones">
                                     <label class="form-label" for="disabledInput">Subtotal colones: </label>
-                                    <span class="badge rounded-pill bg-secondary">₡ {{value_national}}</span>
+                                </div>
+                                <div class="value">
+                                    <span class="badge rounded-pill bg-secondary">₡ {{subTotalNational}}</span>
                                 </div>
 
                             </div>
@@ -154,6 +152,8 @@
                             <div class="col">
                                 <div class="iva-colones">
                                     <label class="form-label" for="disabledInput">I.V.A: </label>
+                                </div>
+                                <div class="value">
                                     <span class="badge rounded-pill bg-secondary">₡ {{iva_national}}</span>
                                 </div>
 
@@ -163,6 +163,8 @@
                             <div class="col">
                                 <div class="total-colones">
                                     <label class="form-label" for="disabledInput">Total colones: </label>
+                                </div>
+                                <div class="value">
                                     <span class="badge rounded-pill bg-secondary">₡ {{price_national}}</span>
                                 </div>
                             </div>
@@ -174,15 +176,14 @@
                                 <h3>Total: ₡{{total}}</h3>
                             </div>
                         </div>
-                        
-                        
                     </div>
+
                     <div class="row">
-                        <div class="button mt-4">
-                            <button class="btn btn-secondary">Reservar</button><br/>
+                        <div class="button mt-1">
+                            <button class="btn btn-secondary">Reservar</button><br />
                         </div>
                         <h1></h1>
-                        <br/>
+                        <br />
                     </div>
                 </div>
 

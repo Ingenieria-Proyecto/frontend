@@ -45,6 +45,8 @@ export class BuyTicketComponent implements OnInit {
   fields:string = ""
   name_park: string = ""
   minDate: string;
+  subTotalNational: number = 0
+  subTotalForeing: number = 0
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute, private _parkService: ParkService,
     private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService, private _rateServuce: RatesService) {
@@ -112,7 +114,8 @@ export class BuyTicketComponent implements OnInit {
     const fechaFormateada = format(fecha, formatoDeseado)
 
     const date = {
-      date_actual: fechaFormateada
+      date_actual: fechaFormateada,
+      id: this.id
     }
     console.log('fecha: ',date)
     this._reservationService.getFieldsEMpty(date).subscribe({
@@ -170,17 +173,17 @@ export class BuyTicketComponent implements OnInit {
   }
 
   getQuantityNational() {
-    const value = this.formReservation.value.cantidad_campos_nacional
-    value === null ? this.value_national : this.value_national = value * 1000
-    this.iva_national = (this.value_national * 0.13)
-    this.price_national = this.iva_national + this.value_national
+    const value = this.formReservation.value.cantidad_campos_nacional || this.value_national
+    this.subTotalNational = value*this.value_national
+    this.iva_national = (this.subTotalNational * 0.13)
+    this.price_national = this.iva_national + this.subTotalNational
     this.total = parseFloat((this.price_national + (this.price_foreing * 539.47)).toFixed(2))
   }
   getQuantityForeing() {
-    const value: number = this.formReservation.value.cantidad_campos_extranjero
-    value === null ? this.value_foreing : this.value_foreing = value * 10
-    this.iva_foreing = parseFloat((this.value_foreing * 0.13).toFixed(2))
-    this.price_foreing = this.iva_foreing + this.value_foreing
+    const value: number = this.formReservation.value.cantidad_campos_extranjero || this.value_foreing
+    this.subTotalForeing = value*this.value_foreing
+    this.iva_foreing = parseFloat((this.subTotalForeing * 0.13).toFixed(2))
+    this.price_foreing = this.iva_foreing + this.subTotalForeing
     this.total = parseFloat(((this.price_foreing * 539.47) + this.price_national).toFixed(2))
   }
 
@@ -225,6 +228,7 @@ export class BuyTicketComponent implements OnInit {
       next: (data: any) => {
         console.log('realizando reserva: ',data)
         this.toastr.success(data.msg)
+        this.router.navigate(['/indexTicket']) 
       },
       error: (error: HttpErrorResponse) => {
         this._errorService.msjError(error)

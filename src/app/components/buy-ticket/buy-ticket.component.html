@@ -5,11 +5,11 @@
         <div class="col-md-10">
 
             <form [formGroup]="formReservation" (ngSubmit)="addReservation()">
-                <div class="form-container">
+                <div class="form-container" [style.display]="conditionForm? 'block':'none'">
                     <div class="row">
                         <div class="title">
                             <h1>Reserva de {{name_park}}</h1>
-                            <h2>Cantidad: {{fields}}</h2>
+                            <h2>Campos disponibles: {{fields}}</h2>
                             <h5>Precio: ₡{{value_national}} / ${{value_foreing}}</h5>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-
+    
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-4">
@@ -41,13 +41,13 @@
                         </div>
                         <div class="col">
                             <div class="form-floating mb-4">
-                                <input type="text" formControlName="detalle" class="form-control mt-3"
-                                    id="floatingInput" placeholder="ingrese nombre reserva">
+                                <input type="text" formControlName="detalle" class="form-control mt-3" id="floatingInput"
+                                    placeholder="ingrese nombre reserva">
                                 <label for="floatingInput">Detalle reservación</label>
                             </div>
                         </div>
                     </div>
-
+    
                     <div class="fields-nationals">
                         <div class="row">
                             <div class="col">
@@ -59,7 +59,7 @@
                                 </select>
                             </div>
                         </div>
-
+    
                         <div class="row">
                             <div class="col" [style.display]="selectedNational? 'block':'none'">
                                 <div class="form-floating mb-4">
@@ -69,11 +69,10 @@
                                     <label for="floatingInput">Cantidad</label>
                                 </div>
                             </div>
-
+    
                             <div class="col" [style.display]="selectedNational? 'block':'none'">
                                 <div class="form-floating mb-4">
-                                    <select class="form-control mt-3" formControlName="procedencia_nacional" name=""
-                                        id="">
+                                    <select class="form-control mt-3" formControlName="procedencia_nacional" name="" id="">
                                         <option *ngFor="let item of listProvince">{{ item }}</option>
                                     </select>
                                     <label for="floatingInput">Procedencia</label>
@@ -82,9 +81,9 @@
                         </div>
                     </div>
                     <div class="fields-foreings">
-
+    
                         <div class="row">
-
+    
                             <div class="col" [style.display]="selectedForeing? 'block':'none'">
                                 <div class="form-floating mb-4">
                                     <input type="number" (click)="getQuantityForeing()"
@@ -96,8 +95,8 @@
                             <div class="col" [style.display]="selectedForeing? 'block':'none'">
                                 <ng-select formControlName="procedencia_extranjera" class="form-control mt-3" name=""
                                     id="select-ng">
-                                    <ng-option style="background-color: aqua;" *ngFor="let item of country"
-                                        [value]="item" id="opciones-ng">{{item}}</ng-option>
+                                    <ng-option style="background-color: aqua;" *ngFor="let item of country" [value]="item"
+                                        id="opciones-ng">{{item}}</ng-option>
                                 </ng-select>
                             </div>
                         </div>
@@ -121,7 +120,7 @@
                                 <div class="value">
                                     <span class="badge rounded-pill bg-secondary">$ {{iva_foreing}}</span>
                                 </div>
-
+    
                             </div>
                         </div>
                         <div class="row">
@@ -136,7 +135,7 @@
                         </div>
                     </div>
                     <div class="colon" [style.display]="selectedNational? 'block':'none'">
-
+    
                         <div class="row">
                             <div class="col">
                                 <div class="subtotal-colones">
@@ -145,7 +144,7 @@
                                 <div class="value">
                                     <span class="badge rounded-pill bg-secondary">₡ {{subTotalNational}}</span>
                                 </div>
-
+    
                             </div>
                         </div>
                         <div class="row">
@@ -156,7 +155,7 @@
                                 <div class="value">
                                     <span class="badge rounded-pill bg-secondary">₡ {{iva_national}}</span>
                                 </div>
-
+    
                             </div>
                         </div>
                         <div class="row">
@@ -177,10 +176,64 @@
                             </div>
                         </div>
                     </div>
+                    
+                </div>
+
+
+                <div class="div reservation">
+
+                    <div class="tarjeta" [style.display]="conditionPay? 'block':'none'">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Forma de pago(*)</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-4">
+                                    <input type="number" formControlName="numberPay" class="form-control mt-3"
+                                        id="floatingInput" placeholder="ingrese usuario">
+                                    <label for="floatingInput">Número de tarjeta</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-4">
+                                    <input type="text" formControlName="titular" class="form-control mt-3"
+                                        id="floatingInput" placeholder="ingrese usuario">
+                                    <label for="floatingInput">Titular de tarjeta</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-4">
+                                    <select formControlName="mount" class="form-control mt-3">
+                                        <option *ngFor="let item of listMount">{{ item }}</option>
+                                    </select>
+                                    <label for="floatingInput">Mes</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-4">
+                                    <select formControlName="year" class="form-control mt-3">
+                                        <option *ngFor="let item of listYear">{{ item }}</option>
+                                    </select>
+                                    <label for="floatingInput">Año</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-4">
+                                    <input type="number" formControlName="ccv" class="form-control mt-3"
+                                        id="floatingInput" placeholder="ingrese usuario">
+                                    <label for="floatingInput">CCV</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
-                        <div class="button mt-1">
-                            <button class="btn btn-secondary">Reservar</button><br />
+                        <div class="button mt-4">
+                            <button class="btn btn-secondary">{{titleButton}}</button><br />
                         </div>
                         <h1></h1>
                         <br />

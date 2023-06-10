@@ -47,6 +47,11 @@ export class BuyTicketComponent implements OnInit {
   minDate: string;
   subTotalNational: number = 0
   subTotalForeing: number = 0
+  listMount: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12']
+  listYear: string[] = ['2023','2024','2025','2026','2027','2028']
+  conditionPay: boolean = false
+  titleButton: string = "Aceptar"
+  conditionForm:boolean = true
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute, private _parkService: ParkService,
     private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService, private _rateServuce: RatesService) {
@@ -61,7 +66,12 @@ export class BuyTicketComponent implements OnInit {
       procedencia_extranjera: ['', Validators.required],
       selectedForeing: [''],
       selectedNational: [true,],
-      selectFrom: ['Nacional']
+      selectFrom: ['Nacional'],
+      numberPay: ['', Validators.required],
+      titular:['', Validators.required],
+      mount:['', Validators.required],
+      year:['', Validators.required],
+      ccv:['', Validators.required]
     })
     const today = new Date();
     this.minDate = this.formatDate(today);
@@ -203,6 +213,9 @@ export class BuyTicketComponent implements OnInit {
     if (quantityFields > 10 || quantityFields< 1) {
       alert('la cantidad de campos debe estar entre 0 y 10')
       this.toastr.warning('la cantidad de campos debe estar entre 0 y 10')
+      this.formReservation.value.cantidad_campos_extranjero = 1
+      this.formReservation.value.cantidad_campos_nacional = 1
+      
       return
     }
     if(!origin){
@@ -210,6 +223,8 @@ export class BuyTicketComponent implements OnInit {
       this.toastr.warning('Debe seleccionar la procedencia')
       return
     }
+
+
 
     const reservation: Reservation = {
       id_parque: this.id,
@@ -224,16 +239,39 @@ export class BuyTicketComponent implements OnInit {
       nombre_reservacion: this.formReservation.value.detalle
     }
 
-    this._reservationService.saveReservation(reservation).subscribe({
-      next: (data: any) => {
-        console.log('realizando reserva: ',data)
-        this.toastr.success(data.msg)
-        this.router.navigate(['/indexTicket']) 
-      },
-      error: (error: HttpErrorResponse) => {
-        this._errorService.msjError(error)
+    if(this.titleButton==='Aceptar'){
+      this.conditionPay = true
+      this.titleButton = 'Reservar'
+      this.conditionForm = false
+      return
+    }
+
+    if(this.titleButton==='Reservar'){
+      if(this.formReservation.value.numberPay<10000000000000){
+        this.toastr.warning('El número de tarjeta debe ser de 16 dígitos')
+          return
       }
-    })
+      if(!this.formReservation.value.numberPay || !this.formReservation.value.titular || !this.formReservation.value.mount || !this.formReservation.value.year
+        ||!this.formReservation.value.ccv){
+          this.toastr.warning('Falta campos por llenar de la tarjeta')
+          return
+      }
+      if(this.formReservation.value.ccv<100){
+        this.toastr.warning('El número CCV debe de tener 3 dígitos')
+          return
+      }
+
+      this._reservationService.saveReservation(reservation).subscribe({
+        next: (data: any) => {
+          console.log('realizando reserva: ',data)
+          this.toastr.success(data.msg)
+          this.router.navigate(['/indexTicket']) 
+        },
+        error: (error: HttpErrorResponse) => {
+          this._errorService.msjError(error)
+        }
+      })
+    }
 
 
 

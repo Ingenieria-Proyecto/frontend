@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Park } from '../interfaces/park';
+import { Control } from '../interfaces/control';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,12 @@ export class ParkService {
   getPark(id: number): Observable<Park>{
     return this.http.get<Park>(`${this.myAppUrl}${this.myApiUrl}`+'/'+id)
   }
-
+  getParksDelete(): Observable<Park[]>{
+    return this.http.get<Park[]>(`${this.myAppUrl}${this.myApiUrl}`+'/delete')
+  }
+  getControl(): Observable<Control[]>{
+    return this.http.get<Control[]>(`${this.myAppUrl}${this.myApiUrl}`+'/control')
+  }
 
   deleteProduct(id: number, nombre:string): Observable<void>{
     const nameClient = {nombre_Admin: nombre}

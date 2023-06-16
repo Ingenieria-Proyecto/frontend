@@ -38,6 +38,8 @@ import { PruebasComponent } from './components/pruebas/pruebas.component';
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 import { AdministrativeListComponent } from './components/ticket/administrative-list/administrative-list.component';
 import { ReservationModalComponent } from './components/ticket/reservation-modal/reservation-modal.component';
+import { ControlParkComponent } from './components/control/control-park/control-park.component';
+import { ControlModalComponent } from './components/control/control-modal/control-modal.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { ReservationModalComponent } from './components/ticket/reservation-modal
     BuyTicketComponent,
     ListParkComponent,
     AdministrativeListComponent,
-    ReservationModalComponent
+    ReservationModalComponent,
+    ControlParkComponent,
+    ControlModalComponent
   ],
   imports: [
     MatCardModule,

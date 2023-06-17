@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Reservation } from '../interfaces/reservation';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ControlReservation } from '../interfaces/controlReservation';
+import { ReportNational } from '../interfaces/reportNational';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,18 @@ export class ReservationService {
 
   saveReservation(reserva: Reservation): Observable<void>{
     return this.http.post<void>(`${this.myAppUrl}${this.reservationUrl}`,reserva)
+  }
+
+  getControlReservation(): Observable<ControlReservation []>{
+    return this.http.get<ControlReservation[]>(`${this.myAppUrl}api/controlReservation/`)
+  }
+
+  getReportNational(): Observable<ReportNational []>{
+    return this.http.get<ReportNational[]>(`${this.myAppUrl}api/controlReservation/reportNational`)
+  }
+
+  getReservationId(id:number): Observable<Reservation>{
+    return this.http.get<Reservation>(`${this.myAppUrl}${this.reservationUrl}/${id}`)
   }
 
   getFieldsEMpty(date: any): Observable<void>{

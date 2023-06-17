@@ -1,10 +1,16 @@
 <app-navbar></app-navbar>
 <br><br>
-<div class="container" *ngIf="barChartData.length > 0 && barChartLabels.length > 0">
+<div class="container">
+  <div class="d-flex justify-content-end">
+  <input type="date" class="form-control form-control-sm custom-input" [(ngModel)]="searchText" style="font-size: 0.8rem; height: 1.875rem;"  placeholder="Buscar por nombre" (input)="filter()">
+</div>
+<div *ngIf="barChartData.length > 0 && barChartLabels.length > 0">
   <canvas baseChart
-    [datasets]="barChartData"
-    [labels]="barChartLabels"
-    [options]="barChartOptions"
-    [legend]="barChartLegend"
-  ></canvas>
+  [datasets]="barChartData"
+  [labels]="barChartLabels"
+  [options]="barChartOptions"
+  [legend]="barChartLegend"
+></canvas>
+</div>
+
 </div>

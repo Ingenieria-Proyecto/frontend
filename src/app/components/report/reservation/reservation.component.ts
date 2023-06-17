@@ -22,7 +22,7 @@ export class ReservationComponent implements OnInit {
   public list: Reservation[] = [];
   public parks: Park[] = [];
   public loading: boolean = false;
-
+  searchText!: string;
   constructor(
     private reservationService: ReservationService,
     private parkService: ParkService
@@ -31,11 +31,21 @@ export class ReservationComponent implements OnInit {
   ngOnInit() {
     this.fetchReservationData();
     this.fetchParkData();
+    this.updateChart();
   }
 
   fetchReservationData() {
     this.reservationService.getList().subscribe((data: Reservation[]) => {
       this.list = data;
+
+      this.list.forEach((reservation: Reservation) => {
+        const date = new Date(reservation.fecha_reservacion);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      reservation.fecha_reservacion = `${year}-${month}-${day}`;
+      });
+
       this.updateChart();
     });
   }
@@ -48,14 +58,26 @@ export class ReservationComponent implements OnInit {
     });
   }
 
-  updateChart() {
+  updateChart(fecha?: string) {
+    console.log(fecha)
+    console.log(this.list)
     if (this.list.length > 0 && this.parks.length > 0) {
+      console.log("HO LA")
       this.barChartLabels = [];
       this.barChartData[0].data = [];
 
       this.parks.forEach((park: Park) => {
-        const visitas = this.list.find((r: Reservation) => r.id_parque === park.id)?.cantidad_campos;
-        park.num_reservation = (park.num_reservation ?? 0) + (visitas ?? 0);
+        park.num_reservation = 0;
+        const visitas = this.list.find((r: Reservation) => {
+          if (fecha) {
+            console.log("Guenas")
+            return r.id_parque === park.id && r.fecha_reservacion === fecha;
+          } else{
+            console.log("No esta pasando nada")
+          return r.id_parque === park.id;
+          }
+        })?.cantidad_campos;
+         park.num_reservation = (park.num_reservation ?? 0) + (visitas ?? 0);
 
         if (park.num_reservation !== 0) {
           this.barChartLabels.push(park.nombre);
@@ -63,5 +85,12 @@ export class ReservationComponent implements OnInit {
         }
       });
     }
+  }
+
+
+  filter(){
+    this.updateChart(this.searchText)
+    console.log(this.barChartLabels)
+
   }
 }

@@ -40,6 +40,8 @@ import { AdministrativeListComponent } from './components/ticket/administrative-
 import { ReservationModalComponent } from './components/ticket/reservation-modal/reservation-modal.component';
 import { ControlParkComponent } from './components/control/control-park/control-park.component';
 import { ControlModalComponent } from './components/control/control-modal/control-modal.component';
+import { ControlReservationComponent } from './components/ticket/control-reservation/control-reservation.component';
+import { ControlModalReservationComponent } from './components/control-modal-reservation/control-modal-reservation.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { ControlModalComponent } from './components/control/control-modal/contro
     AdministrativeListComponent,
     ReservationModalComponent,
     ControlParkComponent,
-    ControlModalComponent
+    ControlModalComponent,
+    ControlReservationComponent,
+    ControlModalReservationComponent
   ],
   imports: [
     MatCardModule,

@@ -42,16 +42,16 @@ export class BuyTicketComponent implements OnInit {
   selectedNational: boolean = true
   listFrom: string[] = ['Nacional', 'Extranjero']
   listProvince: string[] = ['San José', 'Heredia', 'Alajuela', 'Cartago', 'Puntarenas', 'Guanacaste', 'Limón']
-  fields:string = ""
+  fields: string = ""
   name_park: string = ""
   minDate: string;
   subTotalNational: number = 0
   subTotalForeing: number = 0
-  listMount: string[] = ['01','02','03','04','05','06','07','08','09','10','11','12']
-  listYear: string[] = ['2023','2024','2025','2026','2027','2028']
+  listMount: string[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+  listYear: string[] = ['2023', '2024', '2025', '2026', '2027', '2028']
   conditionPay: boolean = false
   titleButton: string = "Aceptar"
-  conditionForm:boolean = true
+  conditionForm: boolean = true
 
   constructor(private fb: FormBuilder, private router: Router, private toastr: ToastrService, private aRouter: ActivatedRoute, private _parkService: ParkService,
     private _errorService: ErrorService, private _scheduleService: ScheduleService, private _countryService: CountryService, private _reservationService: ReservationService, private _rateServuce: RatesService) {
@@ -68,10 +68,10 @@ export class BuyTicketComponent implements OnInit {
       selectedNational: [true,],
       selectFrom: ['Nacional'],
       numberPay: ['', Validators.required],
-      titular:['', Validators.required],
-      mount:['', Validators.required],
-      year:['', Validators.required],
-      ccv:['', Validators.required]
+      titular: ['', Validators.required],
+      mount: ['', Validators.required],
+      year: ['', Validators.required],
+      ccv: ['', Validators.required]
     })
     const today = new Date();
     this.minDate = this.formatDate(today);
@@ -95,11 +95,11 @@ export class BuyTicketComponent implements OnInit {
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
-  
-  getRate(){
+
+  getRate() {
     this._rateServuce.getRate(this.id).subscribe({
       next: (data: Rate) => {
-        console.log('rate: ',data)
+        console.log('rate: ', data)
         this.value_national = data.precio_nacional
         this.value_foreing = data.precio_extranjero
       },
@@ -107,7 +107,7 @@ export class BuyTicketComponent implements OnInit {
       }
     })
   }
-  getNamePark(){
+  getNamePark() {
     this._parkService.getPark(this.id).subscribe({
       next: (data: Park) => {
         this.name_park = data.nombre
@@ -118,7 +118,7 @@ export class BuyTicketComponent implements OnInit {
     })
   }
 
-  getFields(){
+  getFields() {
     const fecha = new Date()
     const formatoDeseado = 'yyyy-MM-dd';
     const fechaFormateada = format(fecha, formatoDeseado)
@@ -127,7 +127,7 @@ export class BuyTicketComponent implements OnInit {
       date_actual: fechaFormateada,
       id: this.id
     }
-    console.log('fecha: ',date)
+    console.log('fecha: ', date)
     this._reservationService.getFieldsEMpty(date).subscribe({
       next: (data: any) => {
         console.log(data.disponible)
@@ -184,14 +184,14 @@ export class BuyTicketComponent implements OnInit {
 
   getQuantityNational() {
     const value = this.formReservation.value.cantidad_campos_nacional || this.value_national
-    this.subTotalNational = value*this.value_national
+    this.subTotalNational = value * this.value_national
     this.iva_national = (this.subTotalNational * 0.13)
     this.price_national = this.iva_national + this.subTotalNational
     this.total = parseFloat((this.price_national + (this.price_foreing * 539.47)).toFixed(2))
   }
   getQuantityForeing() {
     const value: number = this.formReservation.value.cantidad_campos_extranjero || this.value_foreing
-    this.subTotalForeing = value*this.value_foreing
+    this.subTotalForeing = value * this.value_foreing
     this.iva_foreing = parseFloat((this.subTotalForeing * 0.13).toFixed(2))
     this.price_foreing = this.iva_foreing + this.subTotalForeing
     this.total = parseFloat(((this.price_foreing * 539.47) + this.price_national).toFixed(2))
@@ -210,15 +210,15 @@ export class BuyTicketComponent implements OnInit {
     const formatoDeseado = 'yyyy-MM-dd HH:mm:ss';
     const fechaFormateada = format(fecha, formatoDeseado);
 
-    if (quantityFields > 10 || quantityFields< 1) {
+    if (quantityFields > 10 || quantityFields < 1) {
       alert('la cantidad de campos debe estar entre 0 y 10')
       this.toastr.warning('la cantidad de campos debe estar entre 0 y 10')
       this.formReservation.value.cantidad_campos_extranjero = 1
       this.formReservation.value.cantidad_campos_nacional = 1
-      
+
       return
     }
-    if(!origin){
+    if (!origin) {
       alert("No selecciono procedencia")
       this.toastr.warning('Debe seleccionar la procedencia')
       return
@@ -239,33 +239,39 @@ export class BuyTicketComponent implements OnInit {
       nombre_reservacion: this.formReservation.value.detalle
     }
 
-    if(this.titleButton==='Aceptar'){
-      this.conditionPay = true
-      this.titleButton = 'Reservar'
-      this.conditionForm = false
-      return
+    if (this.titleButton === 'Aceptar') {
+      const fieldsTotal: number = parseInt(this.fields) + reservation.cantidad_campos
+      if (fieldsTotal > 400) {
+        this.toastr.warning("La cantidad de campos se excede")
+        return
+      } else {
+        this.conditionPay = true
+        this.titleButton = 'Reservar'
+        this.conditionForm = false
+        return
+      }
     }
 
-    if(this.titleButton==='Reservar'){
-      if(this.formReservation.value.numberPay<10000000000000){
+    if (this.titleButton === 'Reservar') {
+      if (this.formReservation.value.numberPay < 10000000000000) {
         this.toastr.warning('El número de tarjeta debe ser de 16 dígitos')
-          return
+        return
       }
-      if(!this.formReservation.value.numberPay || !this.formReservation.value.titular || !this.formReservation.value.mount || !this.formReservation.value.year
-        ||!this.formReservation.value.ccv){
-          this.toastr.warning('Falta campos por llenar de la tarjeta')
-          return
+      if (!this.formReservation.value.numberPay || !this.formReservation.value.titular || !this.formReservation.value.mount || !this.formReservation.value.year
+        || !this.formReservation.value.ccv) {
+        this.toastr.warning('Falta campos por llenar de la tarjeta')
+        return
       }
-      if(this.formReservation.value.ccv<100){
+      if (this.formReservation.value.ccv < 100) {
         this.toastr.warning('El número CCV debe de tener 3 dígitos')
-          return
+        return
       }
 
       this._reservationService.saveReservation(reservation).subscribe({
         next: (data: any) => {
-          console.log('realizando reserva: ',data)
+          console.log('realizando reserva: ', data)
           this.toastr.success(data.msg)
-          this.router.navigate(['/indexTicket']) 
+          this.router.navigate(['/indexTicket'])
         },
         error: (error: HttpErrorResponse) => {
           this._errorService.msjError(error)

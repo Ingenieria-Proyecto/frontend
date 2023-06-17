@@ -21,6 +21,7 @@ import { AdministrativeListComponent } from './components/ticket/administrative-
 import { ListParkComponent } from './components/ticket/list-park/list-park.component';
 import { ControlParkComponent } from './components/control/control-park/control-park.component';
 import { ControlReservationComponent } from './components/ticket/control-reservation/control-reservation.component';
+import { ReservationComponent } from './components/report/reservation/reservation.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent,canActivate: [AuthGuard]},
@@ -43,6 +44,7 @@ const routes: Routes = [
   {path: 'administrative', component: AdministrativeListComponent},
   {path: 'controlPark', component: ControlParkComponent},
   {path: 'controlReservation', component: ControlReservationComponent},
+  {path: 'reportReservation', component: ReservationComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

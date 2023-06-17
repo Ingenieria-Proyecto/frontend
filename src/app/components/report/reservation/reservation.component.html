@@ -1,0 +1,10 @@
+<app-navbar></app-navbar>
+<br><br>
+<div class="container" *ngIf="barChartData.length > 0 && barChartLabels.length > 0">
+  <canvas baseChart
+    [datasets]="barChartData"
+    [labels]="barChartLabels"
+    [options]="barChartOptions"
+    [legend]="barChartLegend"
+  ></canvas>
+</div>

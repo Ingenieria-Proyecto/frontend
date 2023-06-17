@@ -13,7 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import {DataTablesModule} from 'angular-datatables';
 import { MatCardModule } from '@angular/material/card';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { NgChartsModule } from 'ng2-charts';
 
 //Componentes
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -42,6 +42,7 @@ import { ControlParkComponent } from './components/control/control-park/control-
 import { ControlModalComponent } from './components/control/control-modal/control-modal.component';
 import { ControlReservationComponent } from './components/ticket/control-reservation/control-reservation.component';
 import { ControlModalReservationComponent } from './components/control-modal-reservation/control-modal-reservation.component';
+import { ReservationComponent } from './components/report/reservation/reservation.component';
 
 @NgModule({
   declarations: [
@@ -69,10 +70,12 @@ import { ControlModalReservationComponent } from './components/control-modal-res
     ControlParkComponent,
     ControlModalComponent,
     ControlReservationComponent,
-    ControlModalReservationComponent
+    ControlModalReservationComponent,
+    ReservationComponent
   ],
   imports: [
     MatCardModule,
+    NgChartsModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

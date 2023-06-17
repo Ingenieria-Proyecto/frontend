@@ -22,6 +22,7 @@ import { ListParkComponent } from './components/ticket/list-park/list-park.compo
 import { ControlParkComponent } from './components/control/control-park/control-park.component';
 import { ControlReservationComponent } from './components/ticket/control-reservation/control-reservation.component';
 import { ReservationComponent } from './components/report/reservation/reservation.component';
+import { NacionalidadComponent } from './components/report/nacionalidad/nacionalidad.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent,canActivate: [AuthGuard]},
@@ -45,6 +46,7 @@ const routes: Routes = [
   {path: 'controlPark', component: ControlParkComponent},
   {path: 'controlReservation', component: ControlReservationComponent},
   {path: 'reportReservation', component: ReservationComponent},
+  {path: 'reportNational', component: NacionalidadComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 

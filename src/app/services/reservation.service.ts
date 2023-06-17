@@ -4,6 +4,7 @@ import { Reservation } from '../interfaces/reservation';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ControlReservation } from '../interfaces/controlReservation';
+import { ReportNational } from '../interfaces/reportNational';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class ReservationService {
 
   getControlReservation(): Observable<ControlReservation []>{
     return this.http.get<ControlReservation[]>(`${this.myAppUrl}api/controlReservation/`)
+  }
+
+  getReportNational(): Observable<ReportNational []>{
+    return this.http.get<ReportNational[]>(`${this.myAppUrl}api/controlReservation/reportNational`)
   }
 
   getReservationId(id:number): Observable<Reservation>{

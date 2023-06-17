@@ -43,6 +43,7 @@ import { ControlModalComponent } from './components/control/control-modal/contro
 import { ControlReservationComponent } from './components/ticket/control-reservation/control-reservation.component';
 import { ControlModalReservationComponent } from './components/control-modal-reservation/control-modal-reservation.component';
 import { ReservationComponent } from './components/report/reservation/reservation.component';
+import { NacionalidadComponent } from './components/report/nacionalidad/nacionalidad.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ReservationComponent } from './components/report/reservation/reservatio
     ControlModalComponent,
     ControlReservationComponent,
     ControlModalReservationComponent,
-    ReservationComponent
+    ReservationComponent,
+    NacionalidadComponent
   ],
   imports: [
     MatCardModule,

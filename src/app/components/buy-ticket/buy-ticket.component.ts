@@ -240,8 +240,9 @@ export class BuyTicketComponent implements OnInit {
     }
 
     if (this.titleButton === 'Aceptar') {
-      const fieldsTotal: number = parseInt(this.fields) + reservation.cantidad_campos
-      if (fieldsTotal > 400) {
+      const fieldsTotal: number = parseInt(this.fields) - reservation.cantidad_campos
+      console.log('total campos', fieldsTotal)
+      if (fieldsTotal <= 0) {
         this.toastr.warning("La cantidad de campos se excede")
         return
       } else {
